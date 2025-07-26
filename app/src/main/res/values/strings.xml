@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">F25 Frontend</string>
+
+    <!-- 탑바 -->
+    <string name="back">뒤로가기</string>
+    <string name="notification_desc">알림</string>
+
+    <!-- 달력 -->
+    <string name="default_month">2025년 7월</string>
+
+    <!-- 탭바 -->
+    <string name="home">홈</string>
+    <string name="world">탐색</string>
+    <string name="profile">프로필</string>
+    <string name="calendar_desc">달력</string>
+    <string name="category_sample">카테고리</string>
+    <string name="add_schedule_desc">일정 추가</string>
+
+</resources>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    // Neutral
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="neutral_10">#fcfcfc</color>
+    <color name="neutral_20">#f9f9f9</color>
+    <color name="neutral_30">#f0f0f0</color>
+    <color name="neutral_40">#e0e0e0</color>
+    <color name="neutral_50">#b8b8b8</color>
+    <color name="neutral_60">#8b8b8b</color>
+    <color name="neutral_70">#696969</color>
+    <color name="neutral_80">#4b4b4b</color>
+    <color name="neutral_90">#3b3b3b</color>
+    <color name="neutral_100">#2a2a2a</color>
+
+    // Success
+    <color name="success_10">#edfbf2</color>
+    <color name="success_20">#b7dfc2</color>
+    <color name="success_40">#639c6f</color>
+    <color name="success_60">#316132</color>
+    <color name="success_80">#1d3f20</color>
+    <color name="success_100">#0f2513</color>
+
+    // Info
+    <color name="info_10">#d8e1fb</color>
+    <color name="info_20">#8ea5f1</color>
+    <color name="info_40">#6782eb</color>
+    <color name="info_60">#4a64e2</color>
+    <color name="info_80">#2a39ac</color>
+    <color name="info_100">#1e2a81</color>
+
+    // Warning
+    <color name="warning_10">#fcf5d9</color>
+    <color name="warning_20">#f5df8f</color>
+    <color name="warning_40">#dfb240</color>
+    <color name="warning_60">#8b6621</color>
+    <color name="warning_80">#684c17</color>
+    <color name="warning_100">#372207</color>
+
+    // Error
+    <color name="error_10">#faeceb</color>
+    <color name="error_20">#e69a98</color>
+    <color name="error_40">#bd413b</color>
+    <color name="error_60">#99271f</color>
+    <color name="error_80">#79170e</color>
+    <color name="error_100">#580e08</color>
+
+    // Pink
+    <color name="pink_10">#fcf2f6</color>
+    <color name="pink_20">#f0c1d3</color>
+    <color name="pink_40">#d07192</color>
+    <color name="pink_60">#b34368</color>
+    <color name="pink_80">#912b4a</color>
+    <color name="pink_100">#66182f</color>
+</resources>

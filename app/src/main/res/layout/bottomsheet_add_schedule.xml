@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/bg_bottomsheet_rounded">
+
+    <!--  카테고리 태그 -->
+    <TextView
+        android:id="@+id/tvCategoryTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카테고리1"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:background="@drawable/bg_category_tag"
+        android:layout_marginBottom="12dp" />
+
+    <!--  일정 추가 제목 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일정 추가"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
+
+    <!--  일정명 입력 -->
+    <EditText
+        android:id="@+id/etScheduleName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="일정명을 입력해주세요"
+        android:padding="12dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:layout_marginBottom="24dp" />
+
+    <!--  설정 타이틀 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="설정"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="8dp" />
+
+    <!--  반복 체크박스 -->
+    <CheckBox
+        android:id="@+id/checkRepeatDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="매일 반복" />
+
+    <CheckBox
+        android:id="@+id/checkRepeatFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="매주 금요일 반복"
+        android:layout_marginBottom="24dp" />
+
+    <!--  추가하기 버튼 -->
+    <Button
+        android:id="@+id/btnAddSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="추가하기"
+        android:textSize="16sp"
+        android:background="@drawable/bg_button_primary"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일정 추가"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="12dp"/>
+
+    <EditText
+        android:id="@+id/etTaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="일정명을 입력하세요"
+        android:inputType="text" />
+
+    <CheckBox
+        android:id="@+id/cbRepeatDaily"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="매일 반복"/>
+
+    <CheckBox
+        android:id="@+id/cbRepeatFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="매주 금요일 반복"/>
+
+    <Button
+        android:id="@+id/btnAddTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="추가하기"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
