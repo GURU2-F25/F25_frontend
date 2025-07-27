@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <!-- 로그인 화면 -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.f25_frontend.ui.login.LoginFragment"
+        android:label="로그인"
+        tools:layout="@layout/fragment_login">
+
+        <!-- 회원가입 버튼 → 회원가입 화면 -->
+        <action
+            android:id="@+id/action_loginFragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
+
+        <!-- 로그인 성공 시 → 메인화면 -->
+        <action
+            android:id="@+id/action_loginFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+
+    </fragment>
+
+    <!-- 회원가입 화면 -->
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.f25_frontend.ui.login.SignupFragment"
+        android:label="회원가입"
+        tools:layout="@layout/fragment_signup">
+
+        <!-- 뒤로가기 → 로그인 화면 -->
+        <action
+            android:id="@+id/action_signupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+        <!-- 회원가입 완료 시 → 프로필 설정 화면 -->
+        <action
+            android:id="@+id/action_signupFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+
+
+    </fragment>
+
+    <!-- 프로필 설정 화면 -->
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.f25_frontend.ui.profile.ProfileFragment"
+        android:label="프로필 설정"
+        tools:layout="@layout/fragment_profile">
+
+<!--        프로필 설정 완료 시 → 메인화면 -->
+        <action
+            android:id="@+id/action_profileFragment_to_todoFragment"
+            app:destination="@id/todoFragment" />
+    </fragment>
+
+    <!-- 메인 화면 -->
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="com.example.f25_frontend.ui.todo.TodoFragment"
+        android:label="메인화면"
+        tools:layout="@layout/fragment_todo">
+    </fragment>
+
+</navigation>

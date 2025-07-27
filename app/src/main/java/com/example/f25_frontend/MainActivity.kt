@@ -1,113 +1,117 @@
 package com.example.f25_frontend
 
+//import com.google.firebase.referencecode.storage.R
+import android.content.res.Resources
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.f25_frontend.model.Category
-import com.example.f25_frontend.model.Task
-import com.kizitonwose.calendar.core.WeekDay
-import com.kizitonwose.calendar.view.WeekCalendarView
-import java.time.LocalDate
-import java.time.format.TextStyle
-import java.util.Locale
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 
+
+/**
+ * A simple activity demonstrating use of a NavHostFragment with a navigation drawer.
+ */
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var weekCalendarView: WeekCalendarView
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CategoryAdapter
-    private lateinit var tvMonthYear: TextView
-
-    private var selectedDate: LocalDate? = null
-    private val categoryList = mutableListOf(
-        Category("카테고리 1"),
-        Category("카테고리 2"),
-        Category("카테고리 3")
-    )
+    private lateinit var appBarConfiguration : AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        weekCalendarView = findViewById(R.id.weekCalendarView)
-        recyclerView = findViewById(R.id.categoryRecyclerView)
-        tvMonthYear = findViewById(R.id.tvMonthYear)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        setupWeekCalendar()
-        setupCategoryList()
-    }
+        val host: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
 
-    private fun setupWeekCalendar() {
-        val today = LocalDate.now()
-        val startDate = today.minusWeeks(52)
-        val endDate = today.plusWeeks(52)
+        // Set up Action Bar
+        val navController = host.navController
 
-        weekCalendarView.setup(startDate, endDate, java.time.DayOfWeek.MONDAY)
-        weekCalendarView.scrollToWeek(today)
-        tvMonthYear.text = "${today.year}년 ${today.monthValue}월"
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        weekCalendarView.dayBinder =
-            object : com.kizitonwose.calendar.view.WeekDayBinder<WeekDayContainer> {
-                override fun create(view: View) = WeekDayContainer(view)
-                override fun bind(container: WeekDayContainer, data: WeekDay) {
-                    val date = data.date
-                    container.day = data
+        val navInflater = navController.navInflater
+        val graph = navInflater.inflate(R.navigation.nav_graph)
 
-                    container.dayText.text = date.dayOfMonth.toString()
-                    container.weekDayText.text =
-                        date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
+        setupActionBar(navController, appBarConfiguration)
 
-                    // 날짜 클릭 → 선택 표시 + 선택 날짜 저장
-                    container.view.setOnClickListener {
-                        selectedDate = date
-                        weekCalendarView.notifyCalendarChanged()
-                    }
+        setupNavigationMenu(navController)
 
-                    // 선택된 날짜만 회색 배경
-                    if (selectedDate == date) {
-                        container.view.setBackgroundResource(R.drawable.bg_selected_date)
-                    } else {
-                        container.view.background = null
-                    }
-                }
+        setupBottomNavMenu(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            val dest: String = try {
+                resources.getResourceName(destination.id)
+            } catch (e: Resources.NotFoundException) {
+                Integer.toString(destination.id)
             }
 
-        // 스와이프 시 상단 년/월 변경
-        weekCalendarView.weekScrollListener = { week ->
-            val midDate = week.days[3].date
-            tvMonthYear.text = "${midDate.year}년 ${midDate.monthValue}월"
+            Toast.makeText(this@MainActivity, "Navigated to $dest",
+                Toast.LENGTH_SHORT).show()
+            Log.d("NavigationActivity", "Navigated to $dest")
         }
     }
 
-    private fun setupCategoryList() {
-        adapter = CategoryAdapter(categoryList) { category ->
-            // 선택된 날짜가 없으면 오늘 날짜로
-            val targetDate = selectedDate ?: LocalDate.now()
-
-            val dialogView = layoutInflater.inflate(R.layout.dialog_add_task, null)
-            val etTaskTitle = dialogView.findViewById<android.widget.EditText>(R.id.etTaskTitle)
-
-            val dialog = AlertDialog.Builder(this)
-                .setView(dialogView)
-                .create()
-
-            dialogView.findViewById<android.widget.Button>(R.id.btnAddTask).setOnClickListener {
-                val title = etTaskTitle.text.toString().trim()
-                if (title.isNotEmpty()) {
-                    val newTask = Task(title, targetDate)
-                    category.tasks.add(newTask) // 선택된 카테고리에만 추가
-                    recyclerView.adapter?.notifyDataSetChanged()
-                    dialog.dismiss()
-                }
-            }
-            dialog.show()
-        }
-
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+    private fun setupBottomNavMenu(navController: NavController) {
+        // TODO STEP 9.3 - Use NavigationUI to set up Bottom Nav
+//        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+//        bottomNav?.setupWithNavController(navController)
+        // TODO END STEP 9.3
     }
+
+    private fun setupNavigationMenu(navController: NavController) {
+        // TODO STEP 9.4 - Use NavigationUI to set up a Navigation View
+//        // In split screen mode, you can drag this view out from the left
+//        // This does NOT modify the actionbar
+//        val sideNavView = findViewById<NavigationView>(R.id.nav_view)
+//        sideNavView?.setupWithNavController(navController)
+        // TODO END STEP 9.4
+    }
+
+    private fun setupActionBar(navController: NavController,
+                               appBarConfig : AppBarConfiguration) {
+        // TODO STEP 9.6 - Have NavigationUI handle what your ActionBar displays
+//        // This allows NavigationUI to decide what label to show in the action bar
+//        // By using appBarConfig, it will also determine whether to
+//        // show the up arrow or drawer menu icon
+//        setupActionBarWithNavController(navController, appBarConfig)
+        // TODO END STEP 9.6
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val retValue = super.onCreateOptionsMenu(menu)
+//        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        // The NavigationView already has these same navigation items, so we only add
+        // navigation items to the menu here if there isn't a NavigationView
+//        if (navigationView == null) {
+//            menuInflater.inflate(R.menu.overflow_menu, menu)
+//            return true
+//        }
+        return retValue
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
+        // TODO STEP 9.2 - Have Navigation UI Handle the item selection - make sure to delete
+        //  the old return statement above
+//        // Have the NavigationUI look for an action or destination matching the menu
+//        // item id and navigate there if found.
+//        // Otherwise, bubble up to the parent.
+//        return item.onNavDestinationSelected(findNavController(R.id.my_nav_host_fragment))
+//                || super.onOptionsItemSelected(item)
+        // TODO END STEP 9.2
+    }
+
+    // TODO STEP 9.7 - Have NavigationUI handle up behavior in the ActionBar
+//    override fun onSupportNavigateUp(): Boolean {
+//        // Allows NavigationUI to support proper up navigation or the drawer layout
+//        // drawer menu, depending on the situation
+//        return findNavController(R.id.my_nav_host_fragment).navigateUp(appBarConfiguration)
+//    }
+    // TODO END STEP 9.7
 }
