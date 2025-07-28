@@ -3,8 +3,8 @@
     <!-- 기본 앱 테마 -->
     <style name="Theme.F25_Frontend" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- 색상 설정 -->
-        <item name="colorPrimary">#6C63FF</item>
-        <item name="colorPrimaryVariant">#5A54D4</item>
+        <item name="colorPrimary">@color/neutral_80</item>
+        <item name="colorPrimaryVariant">@color/neutral_80</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorSecondary">#4CAF50</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
@@ -18,5 +18,4 @@
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_bottomsheet_rounded</item>
     </style>
-
 </resources>

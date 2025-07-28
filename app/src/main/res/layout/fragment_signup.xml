@@ -26,13 +26,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:style="@style/UnderlineStyle"
+                android:hint="아이디를 입력해주세요">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextSignupId"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="아이디를 입력해주세요" />
+                    android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!-- 중복확인 버튼 -->
@@ -41,8 +42,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="23dp"
-                android:backgroundTint="@color/black"
+                android:background="@drawable/bg_button_r12"
+                android:backgroundTint="@color/white"
                 android:minWidth="50dp"
+                android:height="48dp"
                 android:layout_gravity="center_vertical"
                 android:text="중복확인"
                 android:textColor="@color/white" />
@@ -60,30 +63,32 @@
 
         <!-- 비밀번호 입력 -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/UnderlineStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="특수문자 포함 8자 이상"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextSignupPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="특수문자 포함 8자 이상"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- 비밀번호 확인 입력 -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/UnderlineStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:hint="위와 동일한 비밀번호 입력"
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextSignupPasswordConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="위와 동일한 비밀번호 입력"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,11 +104,12 @@
         <Button
             android:id="@+id/btnSignupConfirm"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="확인"
+            android:layout_height="52dp"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/black"
-            android:textColor="@color/white" />
+            android:background="@drawable/bg_button_r12"
+            android:text="확인"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
     </LinearLayout>
 </layout>
