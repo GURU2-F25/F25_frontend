@@ -63,77 +63,87 @@
         android:name="com.example.f25_frontend.ui.todo.TodoFragment"
         android:label="메인화면"
         tools:layout="@layout/fragment_todo">
+
         <action
-            android:id="@+id/searchFragment"
-            app:popUpTo="@id/todoFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_todoFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+
+        <action
+            android:id="@+id/action_todoFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment" />
     </fragment>
 
-<!--    &lt;!&ndash; 탐색 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/exploreFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.exploreFragment"-->
-<!--        android:label="탐색화면"-->
-<!--        tools:layout="@layout/fragment_explore">-->
+    <!-- 탐색 화면 -->
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.example.f25_frontend.ui.explore.ExploreFragment"
+        android:label="탐색화면"
+        tools:layout="@layout/fragment_explore">
+
+        <action
+            android:id="@+id/action_exploreFragment_to_exploreListFragment"
+            app:destination="@id/exploreListFragment" />
+
 <!--        <action-->
 <!--            android:id="@+id/exploreFragment"-->
 <!--            app:popUpTo="@id/exploreListFragment"-->
 <!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 탐색 목록 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/exploreListFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.exploreListFragment"-->
-<!--        android:label="탐색리스트화면"-->
-<!--        tools:layout="@layout/fragment_explore_list">-->
-<!--        <action-->
-<!--            android:id="@+id/exploreListFragment"-->
-<!--            app:popUpTo="@id/exploreUserFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 탐색 사용자 프로필 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/exploreUserFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.exploreUserFragment"-->
-<!--        android:label="탐색사용자화면"-->
-<!--        tools:layout="@layout/fragment_explore_user">-->
-<!--        <action-->
-<!--            android:id="@+id/exploreUserFragment"-->
-<!--            app:popUpTo="@id/exploreListFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 마이페이지 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/mypageFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.mypageFragment"-->
-<!--        android:label="마이페이지"-->
-<!--        tools:layout="@layout/fragment_mypage">-->
-<!--        <action-->
-<!--            android:id="@+id/mypageFragment"-->
-<!--            app:popUpTo="@id/todoFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 마이페이지 팔로워 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/mypageFollowerFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.mypageFollowerFragment"-->
-<!--        android:label="내 팔로워 화면"-->
-<!--        tools:layout="@layout/fragment_mympage_follower">-->
-<!--        <action-->
-<!--            android:id="@+id/mypageFollowerFragment"-->
-<!--            app:popUpTo="@id/mypageFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 마이페이지 팔로잉 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/mypageFollowingFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.mypageFollowingFragment"-->
-<!--        android:label="내 팔로잉 화면"-->
-<!--        tools:layout="@layout/fragment_mypage_following">-->
-<!--        <action-->
-<!--            android:id="@+id/mypageFollowingFragment"-->
-<!--            app:popUpTo="@id/mypageFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
+
+    </fragment>
+    <!-- 탐색 목록 화면 -->
+    <fragment
+        android:id="@+id/exploreListFragment"
+        android:name="com.example.f25_frontend.ui.explore.ExploreListFragment"
+        android:label="탐색리스트화면"
+        tools:layout="@layout/fragment_explore_list">
+        <action
+            android:id="@+id/action_exploreListFragment_to_exploreUserFragment"
+            app:destination="@id/exploreUserFragment" />
+    </fragment>
+    <!-- 탐색 사용자 프로필 화면 -->
+    <fragment
+        android:id="@+id/exploreUserFragment"
+        android:name="com.example.f25_frontend.ui.explore.ExploreUserFragment"
+        android:label="탐색사용자화면"
+        tools:layout="@layout/fragment_explore_user">
+        <action
+            android:id="@+id/action_exploreUserFragment_to_exploreListFragment"
+            app:destination="@id/exploreListFragment" />
+    </fragment>
+
+    <!-- 마이페이지 화면 -->
+    <fragment
+        android:id="@+id/mypageFragment"
+        android:name="com.example.f25_frontend.ui.mypage.MypageFragment"
+        android:label="마이페이지"
+        tools:layout="@layout/fragment_mypage">
+        <action
+            android:id="@+id/action_mypageFragment_to_mypageFollowerFragment"
+            app:destination="@id/mypageFollowerFragment" />
+        <action
+            android:id="@+id/action_mypageFragment_to_mypageFollowingFragment"
+            app:destination="@id/mypageFollowingFragment" />
+
+    </fragment>
+    <!-- 마이페이지 팔로워 화면 -->
+    <fragment
+        android:id="@+id/mypageFollowerFragment"
+        android:name="com.example.f25_frontend.ui.mypage.MypageFollowerFragment"
+        android:label="내 팔로워 화면"
+        tools:layout="@layout/fragment_mypage_follower">
+        <action
+            android:id="@+id/action_mypageFollowerFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment" />
+    </fragment>
+    <!-- 마이페이지 팔로잉 화면 -->
+    <fragment
+        android:id="@+id/mypageFollowingFragment"
+        android:name="com.example.f25_frontend.ui.mypage.MypageFollowingFragment"
+        android:label="내 팔로잉 화면"
+        tools:layout="@layout/fragment_mypage_following">
+        <action
+            android:id="@+id/action_mypageFollowingFragment_to_mypageFragment"
+            app:destination="@id/mypageFragment" />
+    </fragment>
 
 </navigation>

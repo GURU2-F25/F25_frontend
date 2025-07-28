@@ -20,14 +20,23 @@
             android:layout_height="wrap_content"
             android:background="@color/black"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="GET TOKEN"
+            android:textSize="14sp"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:id="@+id/logTokenButton"/>
         <fragment
             android:id="@+id/my_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/nav_graph" />
+            app:navGraph="@navigation/nav_graph">
+        </fragment>
     </LinearLayout>
 
 <!--    <com.google.android.material.navigation.NavigationView-->

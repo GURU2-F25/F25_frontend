@@ -38,7 +38,18 @@ class TodoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTodoBinding.inflate(inflater, container, false)
-
+        binding.navExplore.setOnClickListener(){
+            findNavController().navigate(R.id.action_todoFragment_to_exploreFragment)
+        }
+        binding.navMypage.setOnClickListener(){
+            findNavController().navigate(R.id.action_todoFragment_to_mypageFragment)
+        }
+////            val id = binding.editTextId.text.toString().trim()
+////            val pw = binding.editTextPassword.text.toString().trim()
+//            if (id.isNotEmpty() && pw.isNotEmpty()) {
+//                findNavController().navigate(R.id.action_loginFragment_to_todoFragment)
+//            }
+//        }
 //        weekCalendarView = binding.weekCalendarView
 //        recyclerView = binding.categoryRecyclerView
 //        tvMonthYear = binding.tvMonthYear

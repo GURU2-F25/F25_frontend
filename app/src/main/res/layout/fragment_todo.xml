@@ -77,27 +77,31 @@
                 android:src="@drawable/ic_home"
                 app:tint="@android:color/black"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/home" />
+                android:contentDescription="@string/home">
+
+            </ImageButton>
 
             <ImageButton
-                android:id="@+id/navWorld"
+                android:id="@+id/navExplore"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_globe"
                 app:tint="@android:color/black"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/world" />
+                android:contentDescription="@string/world">
+            </ImageButton>
 
             <ImageButton
-                android:id="@+id/navProfile"
+                android:id="@+id/navMypage"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_profile"
                 app:tint="@android:color/black"
                 android:background="@android:color/transparent"
-                android:contentDescription="@string/profile" />
+                android:contentDescription="@string/profile">
+            </ImageButton>
 
         </LinearLayout>
 
