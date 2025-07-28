@@ -8,19 +8,17 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.*
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
 import com.example.f25_frontend.MainActivity
 import com.example.f25_frontend.R
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 
-class FirebaseUtil : FirebaseMessagingService() {
+class FirebaseMsgUtil : FirebaseMessagingService() {
 
     // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

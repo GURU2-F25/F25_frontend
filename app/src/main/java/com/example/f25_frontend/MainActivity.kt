@@ -2,7 +2,6 @@ package com.example.f25_frontend
 
 //import com.google.firebase.referencecode.storage.R
 import android.Manifest
-import android.app.Notification
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
@@ -22,7 +21,7 @@ import android.content.pm.PackageManager
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.example.f25_frontend.databinding.ActivityMainBinding
+import com.example.f25_frontend.utils.FirebaseMsgUtil
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
@@ -64,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
+        FirebaseMsgUtil
 
         askNotificationPermission()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
