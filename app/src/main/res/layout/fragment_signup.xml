@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:style="@style/UnderlineStyle"
+                style="@style/UnderlineStyle"
                 android:hint="아이디를 입력해주세요">
 
                 <com.google.android.material.textfield.TextInputEditText
