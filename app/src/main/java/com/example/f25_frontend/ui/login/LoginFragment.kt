@@ -60,15 +60,13 @@ class LoginFragment : Fragment() {
                 override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
                     if(response.isSuccessful){
                         val result:UserDto? = response.body()
-
+                        Log.d("resultLogin",result.toString())
                         MyApplication.prefs.setString("uId", result?.uId)
                         MyApplication.prefs.setString("id", result?.id)
                         MyApplication.prefs.setString("userName", result?.userName)
                         MyApplication.prefs.setString("access_token", result?.access_token)
                         MyApplication.prefs.setString("token_type", result?.token_type)
-
                         findNavController().navigate(R.id.action_login_to_todo)
-
                     }else{
 //                        if(response.headers().get("statusCode")==200){
 //

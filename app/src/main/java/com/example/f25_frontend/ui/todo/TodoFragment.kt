@@ -12,8 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.f25_frontend.R
 import com.example.f25_frontend.model.Category
+import com.example.f25_frontend.model.Task
 import com.example.f25_frontend.ui.adapter.WeekAdapter
+import com.example.f25_frontend.utils.ApiClient
+import com.example.f25_frontend.utils.retrofitUtil
 import com.example.f25_frontend.viewmodel.CategoryViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -39,6 +45,27 @@ class TodoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+//        hardcoded test
+        val service: retrofitUtil = ApiClient.getNoAuthApiClient().create(retrofitUtil::class.java)
+        service.getTasks("20250730")
+            .enqueue(object: Callback<List<Task>> {
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    service.getCategories("20250730")
+                        .enqueue(object: Callback<List<Category>> {
+                            override fun onResponse(call: Call<List<Category>>, response: Response<List<Category>>) {
+//                             FIND LAYOUT & ADD ITEM NEEDS
+//                             FIND LAYOUT & ADD ITEM NEEDS
+//                             FIND LAYOUT & ADD ITEM NEEDS
+                            }
+                            override fun onFailure(call: Call<List<Category>>, t: Throwable) {
+
+                            }
+                        })
+                }
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+
+                }
+            })
         return inflater.inflate(R.layout.fragment_todo, container, false)
     }
 

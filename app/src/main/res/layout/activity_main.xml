@@ -9,25 +9,34 @@
     tools:context="com.example.f25_frontend.MainActivity">
     <!--    상단 고정 메뉴-->
     <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/nav_bar_top"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:visibility="invisible">
         <ImageButton
             android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:paddingLeft="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_back"
             android:background="@color/white"
-            android:id="@+id/btnPopBackStack"/>
+            android:id="@+id/btnPopBackStack"
+            android:contentDescription="뒤로가기"/>
         <ImageButton
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:paddingRight="20dp"
+            android:layout_height="60dp"
+            android:paddingRight="15dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_notification"
             android:background="@color/white"
-            android:id="@+id/btnNotify"/>
+            android:id="@+id/btnNotify"
+            android:contentDescription="알림"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    메인 화면-->
     <fragment
@@ -51,9 +60,11 @@
         app:itemTextColor="@drawable/menu_selector"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_bottom_navigation" />
+        app:menu="@menu/menu_bottom_navigation"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

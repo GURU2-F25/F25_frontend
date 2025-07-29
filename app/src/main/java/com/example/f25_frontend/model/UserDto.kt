@@ -1,6 +1,5 @@
 package com.example.f25_frontend.model
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class UserDto(

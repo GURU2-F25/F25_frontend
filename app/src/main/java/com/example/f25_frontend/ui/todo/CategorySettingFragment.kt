@@ -34,7 +34,6 @@ class CategorySettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.recyclerCategory)
         btnAddCategory = view.findViewById(R.id.btnAddCategory)
-        btnBack = view.findViewById(R.id.btnBack)
 
         adapter = CategorySettingAdapter(
             mutableListOf(),
@@ -51,10 +50,6 @@ class CategorySettingFragment : Fragment() {
 
         btnAddCategory.setOnClickListener {
             showAddCategoryDialog()
-        }
-
-        btnBack.setOnClickListener {
-            requireActivity().onBackPressed()
         }
     }
 
