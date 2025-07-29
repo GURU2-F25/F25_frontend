@@ -3,147 +3,162 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
-<!--        푸시알림페이지 -->
-    <fragment
-        android:id="@+id/notifyFragment"
-        android:name="com.example.f25_frontend.ui.notify.NotifyFragment"
-        android:label="푸시알림창"
-        tools:layout="@layout/fragment_notify">
-<!--        일정 알람이 올 경우 투두 페이지로 이동-->
-        <action
-            android:id="@+id/action_notify_to_todo"
-            app:destination="@id/todoFragment"/>
-<!--        팔로우 요청이 올 경우 상대방 페이지로 이동-->
-        <action
-            android:id="@+id/action_notify_to_explore_user"
-            app:destination="@id/exploreUserFragment"/>
-    </fragment>
-<!--        로그인화면   -->
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.f25_frontend.ui.login.LoginFragment"
-        android:label="로그인"
-        tools:layout="@layout/fragment_login">
-<!--        회원가입창 이동 -->
-        <action
-            android:id="@+id/action_login_to_signup"
-            app:destination="@id/signupFragment" />
-<!--        로그인 후 메인화면 -->
-        <action
-            android:id="@+id/action_login_to_todo"
-            app:destination="@id/todoFragment" />
-    </fragment>
-<!--     회원가입 화면 -->
-    <fragment
-        android:id="@+id/signupFragment"
-        android:name="com.example.f25_frontend.ui.login.SignupFragment"
-        android:label="회원가입"
-        tools:layout="@layout/fragment_signup">
-<!--         회원가입 → 로그인 화면 -->
-        <action
-            android:id="@+id/action_signup_to_login"
-            app:destination="@id/loginFragment" />
-<!--         회원가입 1단계 → 회원가입 2단계 (프로필 이미지 및 닉네임 설정) 화면 -->
-        <action
-            android:id="@+id/action_signup_to_profile"
-            app:destination="@id/profileFragment" />
-    </fragment>
-<!--     프로필 설정 화면 -->
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.f25_frontend.ui.profile.ProfileFragment"
-        android:label="프로필 설정"
-        tools:layout="@layout/fragment_profile">
-<!--        프로필 설정 완료 시 → 메인화면 -->
-        <action
-            android:id="@+id/action_profile_to_todo"
-            app:destination="@id/todoFragment" />
-    </fragment>
-    <!-- 메인 화면 -->
-    <fragment
-        android:id="@+id/todoFragment"
-        android:name="com.example.f25_frontend.ui.todo.TodoFragment"
-        android:label="TodoFragment"
-        tools:layout="@layout/fragment_todo">
-<!--        메인 화면 → 유저 탐색   -->
-        <action
-            android:id="@+id/action_todo_to_explore"
-            app:destination="@id/exploreFragment" />
-<!--        메인 화면 → 마이페이지-->
-        <action
-            android:id="@+id/action_todo_to_mypage"
-            app:destination="@id/mypageFragment" />
-    </fragment>
-<!--     탐색 화면 -->
-    <fragment
-        android:id="@+id/exploreFragment"
-        android:name="com.example.f25_frontend.ui.explore.ExploreFragment"
-        android:label="ExploreFragment"
-        tools:layout="@layout/fragment_explore">
-<!--        검색 시 유저 목록 조회-->
-        <action
-            android:id="@+id/action_explore_to_explore_list"
-            app:destination="@id/exploreListFragment" />
-    </fragment>
-<!--     탐색 목록 화면 -->
-    <fragment
-        android:id="@+id/exploreListFragment"
-        android:name="com.example.f25_frontend.ui.explore.ExploreListFragment"
-        android:label="탐색 유저 리스트 화면"
-        tools:layout="@layout/fragment_explore_list">
-        <!--        탐색 내 유저 선택 시 해당 유저 페이지 조회   -->
-        <action
-            android:id="@+id/action_explore_list_to_explore_user"
-            app:destination="@id/exploreUserFragment" />
-    </fragment>
-<!--     탐색 사용자 프로필 화면 -->
-    <fragment
-        android:id="@+id/exploreUserFragment"
-        android:name="com.example.f25_frontend.ui.explore.ExploreUserFragment"
-        android:label="탐색 유저 선택 페이지 화면"
-        tools:layout="@layout/fragment_explore_user">
-<!--        선택한 유저 페이지 화면에서 리스트로 돌아가기-->
-        <action
-            android:id="@+id/action_explore_user_to_explore_list"
-            app:destination="@id/exploreListFragment" />
-    </fragment>
-
-    <!-- 마이페이지 화면 -->
-    <fragment
-        android:id="@+id/mypageFragment"
-        android:name="com.example.f25_frontend.ui.mypage.MypageFragment"
-        android:label="MypageFragment"
-        tools:layout="@layout/fragment_mypage">
-<!--        마이페이지 내 팔로워 목록 조회-->
-        <action
-            android:id="@+id/action_mypage_to_mypage_follower"
-            app:destination="@id/mypageFollowerFragment" />
-<!--        마이페이지 내 팔로잉 목록 조회-->
-        <action
-            android:id="@+id/action_mypage_fragment_to_mypage_following"
-            app:destination="@id/mypageFollowingFragment" />
-    </fragment>
-    <!-- 마이페이지 팔로워 화면 -->
-    <fragment
-        android:id="@+id/mypageFollowerFragment"
-        android:name="com.example.f25_frontend.ui.mypage.MypageFollowerFragment"
-        android:label="내 팔로워 화면"
-        tools:layout="@layout/fragment_mypage_follower">
-<!--        팔로워 목록에서 마이페이지로 이동-->
-        <action
-            android:id="@+id/action_mypage_follower_to_mypage"
-            app:destination="@id/mypageFragment" />
-    </fragment>
-    <!-- 마이페이지 팔로잉 화면 -->
-    <fragment
-        android:id="@+id/mypageFollowingFragment"
-        android:name="com.example.f25_frontend.ui.mypage.MypageFollowingFragment"
-        android:label="내 팔로잉 화면"
-        tools:layout="@layout/fragment_mypage_following">
-<!--        팔로잉 목록에서 마이페이지로 이동-->
-        <action
-            android:id="@+id/action_mypage_following_to_mypage"
-            app:destination="@id/mypageFragment" />
-    </fragment>
+    app:startDestination="@id/todoFragment">
+    <!--        푸시알림페이지 -->
+        <fragment
+            android:id="@+id/notifyFragment"
+            android:name="com.example.f25_frontend.ui.notify.NotifyFragment"
+            android:label="푸시알림창"
+            tools:layout="@layout/fragment_notify">
+    <!--        일정 알람이 올 경우 투두 페이지로 이동-->
+            <action
+                android:id="@+id/action_notify_to_todo"
+                app:destination="@id/todoFragment"/>
+    <!--        팔로우 요청이 올 경우 상대방 페이지로 이동-->
+            <action
+                android:id="@+id/action_notify_to_explore_user"
+                app:destination="@id/exploreUserFragment"/>
+        </fragment>
+    <!--        로그인화면   -->
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.example.f25_frontend.ui.login.LoginFragment"
+            android:label="로그인"
+            tools:layout="@layout/fragment_login">
+    <!--        회원가입창 이동 -->
+            <action
+                android:id="@+id/action_login_to_signup"
+                app:destination="@id/signupFragment" />
+    <!--        로그인 후 메인화면 -->
+            <action
+                android:id="@+id/action_login_to_todo"
+                app:destination="@id/todoFragment" />
+        </fragment>
+    <!--     회원가입 화면 -->
+        <fragment
+            android:id="@+id/signupFragment"
+            android:name="com.example.f25_frontend.ui.login.SignupFragment"
+            android:label="회원가입"
+            tools:layout="@layout/fragment_signup">
+    <!--         회원가입 → 로그인 화면 -->
+            <action
+                android:id="@+id/action_signup_to_login"
+                app:destination="@id/loginFragment" />
+    <!--         회원가입 1단계 → 회원가입 2단계 (프로필 이미지 및 닉네임 설정) 화면 -->
+            <action
+                android:id="@+id/action_signup_to_profile"
+                app:destination="@id/profileFragment" />
+        </fragment>
+    <!--     프로필 설정 화면 -->
+        <fragment
+            android:id="@+id/profileFragment"
+            android:name="com.example.f25_frontend.ui.profile.ProfileFragment"
+            android:label="프로필 설정"
+            tools:layout="@layout/fragment_profile">
+    <!--        프로필 설정 완료 시 → 메인화면 -->
+            <action
+                android:id="@+id/action_profile_to_todo"
+                app:destination="@id/todoFragment" />
+        </fragment>
+        <!-- 메인 화면 (TodoFragment) -->
+        <fragment
+            android:id="@+id/todoFragment"
+            android:name="com.example.f25_frontend.ui.todo.TodoFragment"
+            android:label="TodoFragment"
+            tools:layout="@layout/fragment_todo">
+            <!-- 기존 검색 액션 -->
+            <action
+                android:id="@+id/searchFragment"
+                app:popUpTo="@id/todoFragment"
+                app:popUpToInclusive="true" />
+            <!-- ✅ 점 세 개 → 카테고리 설정 화면 이동 -->
+            <action
+                android:id="@+id/action_todoFragment_to_categorySettingFragment"
+                app:destination="@id/categorySettingFragment" />
+        </fragment>
+        <!-- ✅ 카테고리 설정 화면 -->
+        <fragment
+            android:id="@+id/categorySettingFragment"
+            android:name="com.example.f25_frontend.ui.todo.CategorySettingFragment"
+            android:label="카테고리 설정"
+            tools:layout="@layout/fragment_category_setting">
+    <!--        메인 화면 → 유저 탐색   -->
+            <action
+                android:id="@+id/action_todo_to_explore"
+                app:destination="@id/exploreFragment" />
+    <!--        메인 화면 → 마이페이지-->
+            <action
+                android:id="@+id/action_todo_to_mypage"
+                app:destination="@id/mypageFragment" />
+        </fragment>
+    <!--     탐색 화면 -->
+        <fragment
+            android:id="@+id/exploreFragment"
+            android:name="com.example.f25_frontend.ui.explore.ExploreFragment"
+            android:label="ExploreFragment"
+            tools:layout="@layout/fragment_explore">
+    <!--        검색 시 유저 목록 조회-->
+            <action
+                android:id="@+id/action_explore_to_explore_list"
+                app:destination="@id/exploreListFragment" />
+        </fragment>
+    <!--     탐색 목록 화면 -->
+        <fragment
+            android:id="@+id/exploreListFragment"
+            android:name="com.example.f25_frontend.ui.explore.ExploreListFragment"
+            android:label="탐색 유저 리스트 화면"
+            tools:layout="@layout/fragment_explore_list">
+            <!--        탐색 내 유저 선택 시 해당 유저 페이지 조회   -->
+            <action
+                android:id="@+id/action_explore_list_to_explore_user"
+                app:destination="@id/exploreUserFragment" />
+        </fragment>
+    <!--     탐색 사용자 프로필 화면 -->
+        <fragment
+            android:id="@+id/exploreUserFragment"
+            android:name="com.example.f25_frontend.ui.explore.ExploreUserFragment"
+            android:label="탐색 유저 선택 페이지 화면"
+            tools:layout="@layout/fragment_explore_user">
+    <!--        선택한 유저 페이지 화면에서 리스트로 돌아가기-->
+            <action
+                android:id="@+id/action_explore_user_to_explore_list"
+                app:destination="@id/exploreListFragment" />
+        </fragment>
+        <!-- 마이페이지 화면 -->
+        <fragment
+            android:id="@+id/mypageFragment"
+            android:name="com.example.f25_frontend.ui.mypage.MypageFragment"
+            android:label="MypageFragment"
+            tools:layout="@layout/fragment_mypage">
+    <!--        마이페이지 내 팔로워 목록 조회-->
+            <action
+                android:id="@+id/action_mypage_to_mypage_follower"
+                app:destination="@id/mypageFollowerFragment" />
+    <!--        마이페이지 내 팔로잉 목록 조회-->
+            <action
+                android:id="@+id/action_mypage_fragment_to_mypage_following"
+                app:destination="@id/mypageFollowingFragment" />
+        </fragment>
+        <!-- 마이페이지 팔로워 화면 -->
+        <fragment
+            android:id="@+id/mypageFollowerFragment"
+            android:name="com.example.f25_frontend.ui.mypage.MypageFollowerFragment"
+            android:label="내 팔로워 화면"
+            tools:layout="@layout/fragment_mypage_follower">
+    <!--        팔로워 목록에서 마이페이지로 이동-->
+            <action
+                android:id="@+id/action_mypage_follower_to_mypage"
+                app:destination="@id/mypageFragment" />
+        </fragment>
+        <!-- 마이페이지 팔로잉 화면 -->
+        <fragment
+            android:id="@+id/mypageFollowingFragment"
+            android:name="com.example.f25_frontend.ui.mypage.MypageFollowingFragment"
+            android:label="내 팔로잉 화면"
+            tools:layout="@layout/fragment_mypage_following">
+    <!--        팔로잉 목록에서 마이페이지로 이동-->
+            <action
+                android:id="@+id/action_mypage_following_to_mypage"
+                app:destination="@id/mypageFragment" />
+        </fragment>
 </navigation>

@@ -15,13 +15,13 @@ object ApiClient {
 
     fun getNoAuthApiClient(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(realServerURL)
+            .baseUrl(REAL_SERVER_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
     fun getAuthApiClient(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(realServerURL)
+            .baseUrl(REAL_SERVER_URL)
             .client(provideOkHttpClient(AppInterceptor()))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
