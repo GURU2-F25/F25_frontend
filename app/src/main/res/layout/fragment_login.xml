@@ -9,17 +9,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="24dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="아이디"
-            android:textStyle="bold"
             android:textSize="14sp"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/UnderlineStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -27,19 +30,20 @@
                 android:id="@+id/editTextId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="아이디를 입력해주세요"/>
+                android:hint="아이디를 입력해주세요" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
             android:text="비밀번호"
-            android:textStyle="bold"
             android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/UnderlineStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:endIconMode="password_toggle">
@@ -56,20 +60,21 @@
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:height="52dp"
+            android:background="@drawable/bg_button_r12"
             android:text="로그인"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/black"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btnGoSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="@color/black"
-            style="?attr/materialButtonOutlinedStyle"/>
+            android:height="52dp"
+            android:background="@drawable/bg_button_outline_r12"
+            android:text="회원가입"
+            android:textColor="@color/neutral_80" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

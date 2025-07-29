@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/todoFragment"
+        android:icon="@drawable/ic_home"
+        android:title="" />
+
+    <item
+        android:id="@+id/exploreFragment"
+        android:icon="@drawable/ic_globe"
+        android:title="" />
+
+    <item
+        android:id="@+id/mypageFragment"
+        android:icon="@drawable/ic_person"
+        android:title="" />
+</menu>

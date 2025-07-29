@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popBackStackFragment"
+        android:icon="@drawable/ic_back"
+        android:title="" />
+
+    <item
+        android:id="@+id/notifyFragment"
+        android:icon="@drawable/ic_notification"
+        android:title="" />
+</menu>

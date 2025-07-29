@@ -3,6 +3,7 @@
     <!-- 앱 이름 -->
     <string name="app_name">F25 Frontend</string>
 
+    <string name="url">http://f25-backend.onrender.com/</string>
     <!-- 탑바 -->
     <string name="back">뒤로가기</string>
     <string name="notification_desc">알림</string>
@@ -47,6 +48,23 @@
     <string name="percent_zero">0%</string>
 
     <!-- 로그인 -->
+
+    <!-- 마이페이지 텍스트 -->
+    <string name="user_name">사용자이름</string>
+    <string name="user_id">\@사용자아이디</string>
+    <string name="following">팔로잉</string>
+    <string name="follower">팔로워</string>
+    <string name="edit_profile">회원 정보 수정</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdraw">회원탈퇴</string>
+
+    <!-- 접근성 및 버튼 설명 -->
+    <string name="back_button">뒤로가기</string>
+    <string name="notification_button">알림</string>
+    <string name="arrow_icon">화살표 아이콘</string>
+    <string name="profile_image">프로필 이미지</string>
+
+    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -55,4 +73,24 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be &gt;5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="quickstart_message">Click the SUBSCRIBE TO WEATHER button below to subscribe to the
+        weather topic. Messages sent to the weather topic will be received. The LOG TOKEN button logs the
+        FCM registration token to logcat.</string>
+    <string name="subscribe_to_weather">Subscribe To Weather</string>
+    <string name="log_token">Log Token</string>
+
+    <string name="msg_subscribed">Subscribed to weather topic</string>
+    <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <!--
+        This is the name that users will see when interacting with this channel.
+        It should describe the category of notifications that will be sent through this channel
+     -->
+    <!-- [START fcm_default_icon_string] -->
+    <string name="default_notification_channel_name" translatable="true">Weather</string>
+    <!-- [END fcm_default_icon_string] -->
+    <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
+    <string name="fcm_message">FCM Message</string>
 </resources>
