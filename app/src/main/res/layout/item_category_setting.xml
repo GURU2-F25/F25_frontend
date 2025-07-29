@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- 카테고리 이름 -->
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="카테고리 1"
+        android:textSize="14sp"
+        android:textColor="@color/neutral_90"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnEditCategory"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- 변경 버튼 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEditCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:minWidth="60dp"
+        android:text="변경"
+        android:textSize="13sp"
+        android:textColor="@color/neutral_100"
+        android:background="@drawable/bg_button_outline_gray"
+        app:layout_constraintEnd_toStartOf="@+id/btnDeleteCategory"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- 삭제 버튼 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDeleteCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:minWidth="60dp"
+        android:text="삭제"
+        android:textSize="13sp"
+        android:textColor="@color/error_60"
+        android:background="@drawable/bg_button_error"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

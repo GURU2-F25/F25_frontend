@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:paddingVertical="2dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
+    android:layout_marginBottom="2dp"
+    android:gravity="center_vertical">
 
+    <!-- 체크박스: 포커스 비활성화해야 클릭 가능 -->
     <CheckBox
-        android:id="@+id/checkBoxTask"
+        android:id="@+id/cbTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/tvTaskTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="할 일 제목"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:maxLines="1"
+        android:ellipsize="end" />
 
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/icon_trash"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:contentDescription="삭제" />
 </LinearLayout>

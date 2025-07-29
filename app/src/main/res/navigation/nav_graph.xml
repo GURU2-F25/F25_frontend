@@ -12,16 +12,13 @@
         android:label="로그인"
         tools:layout="@layout/fragment_login">
 
-        <!-- 회원가입 버튼 → 회원가입 화면 -->
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"
             app:destination="@id/signupFragment" />
 
-        <!-- 로그인 성공 시 → 메인화면 -->
         <action
             android:id="@+id/action_loginFragment_to_todoFragment"
             app:destination="@id/todoFragment" />
-
     </fragment>
 
     <!-- 회원가입 화면 -->
@@ -31,17 +28,13 @@
         android:label="회원가입"
         tools:layout="@layout/fragment_signup">
 
-        <!-- 뒤로가기 → 로그인 화면 -->
         <action
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
 
-        <!-- 회원가입 완료 시 → 프로필 설정 화면 -->
         <action
             android:id="@+id/action_signupFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-
-
     </fragment>
 
     <!-- 프로필 설정 화면 -->
@@ -51,89 +44,36 @@
         android:label="프로필 설정"
         tools:layout="@layout/fragment_profile">
 
-<!--        프로필 설정 완료 시 → 메인화면 -->
         <action
             android:id="@+id/action_profileFragment_to_todoFragment"
             app:destination="@id/todoFragment" />
     </fragment>
 
-    <!-- 메인 화면 -->
+    <!-- 메인 화면 (TodoFragment) -->
     <fragment
         android:id="@+id/todoFragment"
         android:name="com.example.f25_frontend.ui.todo.TodoFragment"
         android:label="메인화면"
         tools:layout="@layout/fragment_todo">
+
+        <!-- 기존 검색 액션 -->
         <action
             android:id="@+id/searchFragment"
             app:popUpTo="@id/todoFragment"
             app:popUpToInclusive="true" />
+
+        <!-- ✅ 점 세 개 → 카테고리 설정 화면 이동 -->
+        <action
+            android:id="@+id/action_todoFragment_to_categorySettingFragment"
+            app:destination="@id/categorySettingFragment" />
+
     </fragment>
 
-<!--    &lt;!&ndash; 탐색 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/exploreFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.exploreFragment"-->
-<!--        android:label="탐색화면"-->
-<!--        tools:layout="@layout/fragment_explore">-->
-<!--        <action-->
-<!--            android:id="@+id/exploreFragment"-->
-<!--            app:popUpTo="@id/exploreListFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 탐색 목록 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/exploreListFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.exploreListFragment"-->
-<!--        android:label="탐색리스트화면"-->
-<!--        tools:layout="@layout/fragment_explore_list">-->
-<!--        <action-->
-<!--            android:id="@+id/exploreListFragment"-->
-<!--            app:popUpTo="@id/exploreUserFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 탐색 사용자 프로필 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/exploreUserFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.exploreUserFragment"-->
-<!--        android:label="탐색사용자화면"-->
-<!--        tools:layout="@layout/fragment_explore_user">-->
-<!--        <action-->
-<!--            android:id="@+id/exploreUserFragment"-->
-<!--            app:popUpTo="@id/exploreListFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 마이페이지 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/mypageFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.mypageFragment"-->
-<!--        android:label="마이페이지"-->
-<!--        tools:layout="@layout/fragment_mypage">-->
-<!--        <action-->
-<!--            android:id="@+id/mypageFragment"-->
-<!--            app:popUpTo="@id/todoFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 마이페이지 팔로워 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/mypageFollowerFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.mypageFollowerFragment"-->
-<!--        android:label="내 팔로워 화면"-->
-<!--        tools:layout="@layout/fragment_mympage_follower">-->
-<!--        <action-->
-<!--            android:id="@+id/mypageFollowerFragment"-->
-<!--            app:popUpTo="@id/mypageFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
-<!--    &lt;!&ndash; 마이페이지 팔로잉 화면 &ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:id="@+id/mypageFollowingFragment"-->
-<!--        android:name="com.example.f25_frontend.ui.todo.mypageFollowingFragment"-->
-<!--        android:label="내 팔로잉 화면"-->
-<!--        tools:layout="@layout/fragment_mypage_following">-->
-<!--        <action-->
-<!--            android:id="@+id/mypageFollowingFragment"-->
-<!--            app:popUpTo="@id/mypageFragment"-->
-<!--            app:popUpToInclusive="true" />-->
-<!--    </fragment>-->
+    <!-- ✅ 카테고리 설정 화면 -->
+    <fragment
+        android:id="@+id/categorySettingFragment"
+        android:name="com.example.f25_frontend.ui.todo.CategorySettingFragment"
+        android:label="카테고리 설정"
+        tools:layout="@layout/fragment_category_setting" />
 
 </navigation>
