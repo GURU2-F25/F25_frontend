@@ -1,25 +1,13 @@
 package com.example.f25_frontend.ui.todo
 
 import android.os.Bundle
-import android.util.JsonReader
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-
 import com.example.f25_frontend.databinding.FragmentTodoBinding
-import com.example.f25_frontend.R
-import com.example.f25_frontend.CategoryAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.f25_frontend.MyApplication
-import com.example.f25_frontend.model.Category
-import com.example.f25_frontend.model.UserDto
-import retrofit2.converter.gson.GsonConverterFactory
-
 
 class TodoFragment : Fragment() {
 

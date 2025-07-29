@@ -2,11 +2,7 @@ package com.example.f25_frontend.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 
-//firebase push notification add.
-@Parcelize
 data class UserDto(
     @SerializedName("id") val id: String,
     @SerializedName("password") val password: String,
@@ -19,4 +15,4 @@ data class UserDto(
 //    @SerializedName("following") val following: List<String>?,
 //    @SerializedName("task") val task: List<Task>?,
 //    @SerializedName("deviceToken") val deviceToken: String?
-) : Parcelable
+)
