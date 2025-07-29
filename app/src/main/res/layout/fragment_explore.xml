@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,16 +7,16 @@
     android:background="@android:color/white"
     tools:context=".ui.explore.ExploreFragment">
 
-    <!-- 검색 상단 영역 -->
+    <!-- 상단 검색 바 -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginTop="@dimen/fragment_explore_margin">
 
-        <!-- 검색창  -->
         <EditText
             android:id="@+id/exploreSearchText"
             android:layout_width="0dp"
@@ -32,63 +31,15 @@
             android:paddingEnd="12dp"
             android:textSize="14sp"
             android:singleLine="true" />
-
-        <!-- 오른쪽 알림 아이콘 -->
-        <ImageButton
-            android:id="@+id/btnNotification"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_bell"
-            android:contentDescription="@string/notification_button"/>
     </LinearLayout>
 
-    <!-- 검색 결과 리스트 영역 -->
-    <LinearLayout
-        android:id="@+id/layoutResultContainer"
+    <!-- 사용자 리스트 -->
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp">
-
-    </LinearLayout>
+        android:paddingHorizontal="8dp"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_user" />
 
 </LinearLayout>
-
-    <!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="24dp">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageProfile"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:src="@drawable/img_profile"-->
-<!--            android:layout_gravity="center"/>-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/editTextProfileName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="EXPLORE VIEW"-->
-<!--            android:layout_marginTop="16dp"/>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btnExploreExecute"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="저장"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:backgroundTint="@color/black"-->
-<!--            android:textColor="@color/white"/>-->
-
-
-<!--    </LinearLayout>-->
-<!--</layout>-->
