@@ -13,12 +13,14 @@ object ApiClient {
     private val REAL_SERVER_URL:String = "https://f25-backend.onrender.com/"
 //    private val DEV_SERVER_URL:String = "https://10.0.0.2:8000/"
 
+//  로그인 전 Bearer Authorization 토큰이 없을 때 백엔드 통신 메소드
     fun getNoAuthApiClient(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(REAL_SERVER_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+//  Bearer Authorization 토큰을 인터셉터를 활용하여 자동 추가한 후 백엔드 통신 메소드
     fun getAuthApiClient(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(REAL_SERVER_URL)
@@ -26,7 +28,7 @@ object ApiClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-//    ADD HTTP LOGGER INTERCEPTOR && AUTHORIZATION INTERCEPTOR
+//  RETROFIT2 통신 모듈에 디버깅을 위해 로그 인터셉터와 헤더 자동 추가 인터셉터 설정
     private fun provideOkHttpClient(interceptor: AppInterceptor): OkHttpClient
             = OkHttpClient.Builder().run {
                 addInterceptor(HttpLoggingInterceptor().let{it.setLevel(HttpLoggingInterceptor.Level.BODY)})

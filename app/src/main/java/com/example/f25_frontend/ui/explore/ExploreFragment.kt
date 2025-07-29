@@ -8,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.f25_frontend.MyApplication
+import com.example.f25_frontend.R
 import com.example.f25_frontend.databinding.FragmentExploreBinding
+import com.example.f25_frontend.model.UserDto
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.retrofitUtil
 import com.google.gson.JsonElement
@@ -38,14 +41,35 @@ class ExploreFragment : Fragment() {
                 Log.d("searchIdTextOnChanged", s.toString())
 
                 val service: retrofitUtil = ApiClient.getAuthApiClient().create(retrofitUtil::class.java)
-                service.getUser(s.toString())
-                    .enqueue(object : Callback<JsonElement>{
-                        override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+
+                service.searchUser(s.toString())
+                    .enqueue(object : Callback<List<UserDto>>{
+                        override fun onResponse(call: Call<List<UserDto>>, response: Response<List<UserDto>>) {
                             Log.d("result coroutines", response.body().toString())
+
+                            /*
+                            val len = response.body().count()
+                            mutableListOf()를 사용하는 Adapter 만들어서 데이터 소팅
+                            https://velog.io/@simsubeen/Android-Kotlin-ListView
+
+                            onClickListener(){
+                                val intent = setIntent()
+                                intent.set("id")
+                                intent.set("userName")
+                                intent.put("follower")
+                                intent.put("following")
+                                intent.put("profileImage")
+
+                                findNavController().navigate(R.id.action_explore_to_explore_user, intent)                            }
+                            */
+//                            binding.userListLayout.addView()
+//                            BINDING LAYOUT && ADD ITEM (USER LIST)
+//                            onClickListener SET && request UserDetail -> onResponse NAVIGATE DETAIL PAGE
+
                         }
 
-                        override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                            Log.d("result coroutines failed", t.toString())
+                        override fun onFailure(call: Call<List<UserDto>>, t: Throwable) {
+                            TODO("Not yet implemented")
                         }
                     })
             }

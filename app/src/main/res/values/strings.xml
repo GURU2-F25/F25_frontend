@@ -3,7 +3,6 @@
     <!-- 앱 이름 -->
     <string name="app_name">F25 Frontend</string>
 
-    <string name="url">http://f25-backend.onrender.com/</string>
     <!-- 탑바 -->
     <string name="back">뒤로가기</string>
     <string name="notification_desc">알림</string>
@@ -52,6 +51,14 @@
 
 
     <!-- 로그인 -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be &gt;5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 
     <!-- 마이페이지 텍스트 -->
     <string name="user_name">사용자이름</string>
@@ -68,19 +75,10 @@
     <string name="arrow_icon">화살표 아이콘</string>
     <string name="profile_image">프로필 이미지</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be &gt;5 characters</string>
-    <string name="login_failed">"Login failed"</string>
 
     <string name="quickstart_message">Click the SUBSCRIBE TO WEATHER button below to subscribe to the
-        weather topic. Messages sent to the weather topic will be received. The LOG TOKEN button logs the
-        FCM registration token to logcat.</string>
+            weather topic. Messages sent to the weather topic will be received. The LOG TOKEN button logs the
+            FCM registration token to logcat.</string>
     <string name="subscribe_to_weather">Subscribe To Weather</string>
     <string name="log_token">Log Token</string>
 

@@ -22,14 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_back"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/back_button" />
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/mypage_setting_margin_top">
 
                 <TextView
                     android:layout_width="0dp"
@@ -39,13 +33,6 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center" />
-
-                <ImageButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_bell"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/notification_button" />
             </LinearLayout>
 
             <!-- 프로필 -->
@@ -59,7 +46,7 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/ic_account_circle"
+                    android:src="@drawable/ic_profile"
                     android:contentDescription="@string/profile_image"
                     android:layout_marginEnd="16dp" />
 
@@ -80,8 +67,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_id"
-                        android:textColor="#00584A"
-                        android:background="@color/purple_200"
+                        android:textColor="@color/neutral_90"
+                        android:background="@drawable/bg_user_id_label"
                         android:textSize="12sp"
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="4dp"
@@ -145,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="@dimen/mypage_setting_margin_top">
 
                 <!-- 회원 정보 수정 -->
                 <LinearLayout
@@ -232,45 +219,45 @@
 </RelativeLayout>
 
     <!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="24dp">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="24dp">-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageProfile"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:src="@drawable/img_profile"-->
-<!--            android:layout_gravity="center"/>-->
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imageProfile"-->
+    <!--            android:layout_width="100dp"-->
+    <!--            android:layout_height="100dp"-->
+    <!--            android:src="@drawable/img_profile"-->
+    <!--            android:layout_gravity="center"/>-->
 
-<!--        <EditText-->
-<!--            android:id="@+id/editTextProfileName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="MYPAGE"-->
-<!--            android:layout_marginTop="16dp"/>-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/editTextProfileName"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:hint="MYPAGE"-->
+    <!--            android:layout_marginTop="16dp"/>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btnMypageFollower"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="MYPAGE_FOLLOWER"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:backgroundTint="@color/black"-->
-<!--            android:textColor="@color/white"/>-->
+    <!--        <Button-->
+    <!--            android:id="@+id/btnMypageFollower"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="MYPAGE_FOLLOWER"-->
+    <!--            android:layout_marginTop="24dp"-->
+    <!--            android:backgroundTint="@color/black"-->
+    <!--            android:textColor="@color/white"/>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btnMypageFollowing"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="MYPAGE_FOLLOWING"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:backgroundTint="@color/black"-->
-<!--            android:textColor="@color/white"/>-->
+    <!--        <Button-->
+    <!--            android:id="@+id/btnMypageFollowing"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="MYPAGE_FOLLOWING"-->
+    <!--            android:layout_marginTop="24dp"-->
+    <!--            android:backgroundTint="@color/black"-->
+    <!--            android:textColor="@color/white"/>-->
 
-<!--    </LinearLayout>-->
-<!--</layout>-->
+    <!--    </LinearLayout>-->
+    <!--</layout>-->

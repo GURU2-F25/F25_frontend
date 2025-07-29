@@ -64,9 +64,9 @@ class MainActivity : AppCompatActivity() {
             navigationController.navigate(R.id.notifyFragment)
         }
 //        scope에 로그인값이 없을 경우
-        if(false){
-            binding.navBarTop.visibility= View.INVISIBLE
-            binding.navBarBottom.visibility= View.INVISIBLE
+        if(MyApplication.prefs.getString("id") != null){
+            binding.navBarTop.visibility= View.VISIBLE
+            binding.navBarBottom.visibility= View.VISIBLE
         }
 
         askNotificationPermission()
