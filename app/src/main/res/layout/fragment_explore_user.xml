@@ -16,7 +16,7 @@
             android:id="@+id/imgProfile"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:src="@drawable/ic_person"
+            android:src="@drawable/ic_profile"
             android:layout_marginTop="16dp"
             android:contentDescription="프로필 이미지" />
 

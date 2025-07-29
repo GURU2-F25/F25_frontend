@@ -11,6 +11,6 @@
 
     <item
         android:id="@+id/mypageFragment"
-        android:icon="@drawable/ic_person"
+        android:icon="@drawable/ic_profile"
         android:title="" />
 </menu>

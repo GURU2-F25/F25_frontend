@@ -25,9 +25,7 @@ class ExploreUserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExploreUserBinding.inflate(inflater, container, false)
-        binding.btnExploreListReturn.setOnClickListener(){
-            findNavController().popBackStack()
-        }
+
         /*
         val id = this.arguments?.get("id").toString()
         val userName = this.arguments?.get("userName").toString()
