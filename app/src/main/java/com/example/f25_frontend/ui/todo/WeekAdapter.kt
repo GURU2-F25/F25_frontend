@@ -39,9 +39,9 @@ class WeekAdapter(
             }
 
             itemView.setOnClickListener {
-                selectedDate = date               // ✅ 내부 selectedDate도 갱신
-                notifyDataSetChanged()           // ✅ UI 갱신
-                onDateClick(date)                // ✅ 외부 콜백 호출
+                selectedDate = date
+                notifyDataSetChanged()
+                onDateClick(date)
             }
         }
     }

@@ -37,10 +37,8 @@ class CategoryAdapter(
         holder.tvCategoryName.text = category.name
         holder.tvCategoryName.setTextColor(category.color)
 
-        // 할 일 목록
         val tasks = category.tasksByDate[selectedDate] ?: emptyList()
 
-        // TaskAdapter 세팅
         val taskAdapter = TaskAdapter(
             tasks = tasks,
             onTaskChecked = { task ->

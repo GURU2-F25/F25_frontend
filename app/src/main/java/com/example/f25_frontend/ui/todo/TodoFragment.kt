@@ -163,7 +163,7 @@ class TodoFragment : Fragment() {
             tvName.setTextColor(category.color)
 
             progressBar.progress = percent
-            progressBar.progressTintList = ColorStateList.valueOf(category.color) // ✅ 색상 적용
+            progressBar.progressTintList = ColorStateList.valueOf(category.color)
             tvPercent.text = "$percent%"
             tvPercent.setTextColor(category.color)
 

@@ -76,7 +76,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- ✅ 선택한 날짜 목표 달성률 텍스트 -->
+    <!-- 선택한 날짜 목표 달성률 텍스트 -->
     <TextView
         android:id="@+id/tvSelectedDateProgress"
         android:layout_width="wrap_content"

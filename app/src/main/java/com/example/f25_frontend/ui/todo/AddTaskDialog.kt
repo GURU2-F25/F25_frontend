@@ -21,23 +21,21 @@ class AddTaskDialog(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_add_task)
 
-        // ✅ 다이얼로그 크기 및 배경 설정
+
         window?.setLayout(
             (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // ✅ UI 요소 참조
         val tvCategoryTitle = findViewById<TextView>(R.id.tvCategoryTitle)
         val etTaskTitle = findViewById<EditText>(R.id.etTaskTitle)
         val cbRepeatDaily = findViewById<CheckBox>(R.id.cbRepeatDaily)
-        val cbRepeatWeekly = findViewById<CheckBox>(R.id.cbRepeatFriday)  // 이름이 Weekly여도 id는 Friday
+        val cbRepeatWeekly = findViewById<CheckBox>(R.id.cbRepeatFriday)
         val btnAddTaskConfirm = findViewById<Button>(R.id.btnAddTaskConfirm)
 
         tvCategoryTitle.text = category.name
 
-        // ✅ 버튼 클릭 처리
         btnAddTaskConfirm.setOnClickListener {
             val taskTitle = etTaskTitle.text.toString().trim()
 

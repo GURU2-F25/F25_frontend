@@ -71,26 +71,24 @@ class CategorySettingFragment : Fragment() {
             R.id.colorOption9 to Color.parseColor("#3b3b3b")
         )
 
-        // 모든 FrameLayout 모아둠
         val allFrames = colorMap.keys.map { view.findViewById<FrameLayout>(it) }
 
         for ((id, color) in colorMap) {
             val frame = view.findViewById<FrameLayout>(id)
             val colorView = frame.getChildAt(0)
 
-            // 초기 선택된 색상 테두리 적용
+
             if (defaultColor == color) {
                 frame.foreground = ContextCompat.getDrawable(requireContext(), R.drawable.bg_color_circle_selected)
             } else {
                 frame.foreground = null
             }
 
-            // 클릭 리스너: 내부 뷰에 달아도 되고, frame에도 달아도 됨
             colorView.setOnClickListener {
                 onColorSelected(color)
 
-                allFrames.forEach { it.foreground = null } // 모든 테두리 제거
-                frame.foreground = ContextCompat.getDrawable(requireContext(), R.drawable.bg_color_circle_selected) // 선택된 테두리
+                allFrames.forEach { it.foreground = null }
+                frame.foreground = ContextCompat.getDrawable(requireContext(), R.drawable.bg_color_circle_selected)
             }
         }
     }
