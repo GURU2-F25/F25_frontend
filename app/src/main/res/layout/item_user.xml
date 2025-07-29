@@ -7,16 +7,16 @@
     android:paddingVertical="12dp"
     android:paddingHorizontal="16dp">
 
-    <!-- 👤 프로필 이미지 -->
+    <!-- 프로필 이미지 -->
     <ImageView
         android:id="@+id/imgProfile"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_person"
-    android:contentDescription="@string/profile_image" />
+        android:background="@drawable/ic_profile"
+        android:contentDescription="@string/profile_image" />
 
-    <!-- 🧾 이름 + 아이디 -->
+    <!-- 사용자 이름 및 아이디 -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Typeface"
+            android:text="UserName"
             android:textStyle="bold"
             android:textSize="14sp"
             android:textColor="@android:color/black" />
@@ -37,22 +37,20 @@
             android:id="@+id/tvUserId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\@typefaceai"
+            android:text="\@UserID"
             android:textSize="12sp"
             android:textColor="#999999" />
     </LinearLayout>
 
-    <!-- 🔘 팔로우 버튼 (상태에 따라 스타일 변경됨) -->
+    <!-- 팔로우 / 팔로잉 버튼 -->
     <Button
         android:id="@+id/btnFollow"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:paddingHorizontal="20dp"
         android:text="팔로우"
         android:textSize="13sp"
         android:textColor="@android:color/white"
         android:background="@drawable/btn_follow_black"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
         android:gravity="center" />
 </LinearLayout>

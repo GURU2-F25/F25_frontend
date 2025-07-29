@@ -1,55 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    tools:context=".ui.follow.FollowerListFragment">
 
-    <!-- [2] 팔로워 리스트 영역 -->
-    <!-- RecyclerView를 통해 사용자 목록을 백엔드에서 불러와 표시할 예정 -->
+    <!-- [1] 상단 타이틀 바 -->
+    <RelativeLayout
+        android:id="@+id/layoutTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- 뒤로가기 버튼 -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_back"
+            android:contentDescription="@string/back_button"
+            android:layout_alignParentStart="true" />
+
+        <!-- 중앙 제목 -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="팔로워"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 알림 버튼 -->
+        <ImageButton
+            android:id="@+id/btnBell"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_bell"
+            android:contentDescription="@string/notification_button"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <!-- [2] 팔로워 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerFollowerList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layoutTopBar"
         android:paddingHorizontal="16dp"
         android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_user" />
 
-</LinearLayout>
+</RelativeLayout>
+
+
+
+
 
     <!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="24dp">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="24dp">-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageProfile"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:src="@drawable/ic_person"-->
-<!--            android:layout_gravity="center"/>-->
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imageProfile"-->
+    <!--            android:layout_width="100dp"-->
+    <!--            android:layout_height="100dp"-->
+    <!--            android:src="@drawable/ic_person"-->
+    <!--            android:layout_gravity="center"/>-->
 
-<!--        <EditText-->
-<!--            android:id="@+id/editTextProfileName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="MYPAGE_FOLLOWER"-->
-<!--            android:layout_marginTop="16dp"/>-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/editTextProfileName"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:hint="MYPAGE_FOLLOWER"-->
+    <!--            android:layout_marginTop="16dp"/>-->
 
-<!--        <Button-->
-<!--            android:id="@+id/btnReturnMypage"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="저장"-->
-<!--            android:layout_marginTop="24dp"-->
-<!--            android:backgroundTint="@color/black"-->
-<!--            android:textColor="@color/white"/>-->
+    <!--        <Button-->
+    <!--            android:id="@+id/btnReturnMypage"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="저장"-->
+    <!--            android:layout_marginTop="24dp"-->
+    <!--            android:backgroundTint="@color/black"-->
+    <!--            android:textColor="@color/white"/>-->
 
-<!--    </LinearLayout>-->
-<!--</layout>-->
+    <!--    </LinearLayout>-->
+    <!--</layout>-->

@@ -2,4 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fragment_horizontal_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">16dp</dimen>
+    <dimen name="fragment_explore_margin">16dp</dimen>
+    <dimen name="mypage_setting_margin_top">35dp</dimen>
 </resources>
