@@ -19,12 +19,14 @@ class MypageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
-        binding.btnMypageFollower.setOnClickListener(){
-            findNavController().navigate(R.id.action_mypageFragment_to_mypageFollowerFragment)
-        }
-        binding.btnMypageFollowing.setOnClickListener(){
-            findNavController().navigate(R.id.action_mypageFragment_to_mypageFollowingFragment)
-        }
+        /*
+//        binding.btnMypageFollower.setOnClickListener(){
+//            findNavController().navigate(R.id.action_mypage_to_mypage_follower)
+//        }
+//        binding.btnMypageFollowing.setOnClickListener(){
+//            findNavController().navigate(R.id.action_mypage_following_to_mypage)
+//        }
+         */
         // 로그인 버튼
 //        binding.btnProfileSave.setOnClickListener {
 ////            val id = binding.editTextId.text.toString().trim()

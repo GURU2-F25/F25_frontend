@@ -27,7 +27,7 @@ class ProfileFragment : Fragment() {
                 return@setOnClickListener
             }
             else{
-                findNavController().navigate(R.id.action_profileFragment_to_todoFragment)
+                findNavController().navigate(R.id.action_profile_to_todo)
             }
         }
         return binding.root

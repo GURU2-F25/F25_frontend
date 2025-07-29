@@ -1,6 +1,7 @@
 package com.example.f25_frontend.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.f25_frontend.R
 import com.example.f25_frontend.databinding.FragmentSignupBinding
+import com.example.f25_frontend.model.UserDto
+import com.example.f25_frontend.utils.ApiClient
+import com.example.f25_frontend.utils.retrofitUtil
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SignupFragment : Fragment() {
 
@@ -52,33 +62,37 @@ class SignupFragment : Fragment() {
 
             // createUser(id, pw) 사용자 정보 저장
             createUser(id, pw)
-            // 회원가입 완료 → 프로필 설정 화면으로 이동
-            findNavController().navigate(R.id.action_signupFragment_to_profileFragment)
+
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // 아이디 입력값이 변경되면 다시 중복확인 필요 (초기화)
-//        asdf asdf1 asdf12 asdf123 asdf1234
-//        중복검사 버튼 누를 시 체크 or onFocus가 해제될 때 그러니까 다른 쪽으로 focus가 옮겨 갈 때 중복 검사
-        /*binding.editTextSignupId.add온클릭이나 포커스Listener {
-        isExistId? == true false 반환 해주는 callBack 짜주기
-            isIdAvailable = false
-        }*/
-
-
     }
 
-    //회원 정보 Firestore에 저장
     private fun createUser(userId: String, password: String) {
-        val newUser = hashMapOf(
-            "userId" to userId,
-            "password" to password, // 실제 배포 시 해싱 필요
-            "nickname" to userId    // 초기 닉네임 = 아이디
-        )
+        val service: retrofitUtil = ApiClient.getNoAuthApiClient().create(retrofitUtil::class.java)
+        val newUser = UserDto(id=userId, password=password, userName="userNameTest",profileImage="string", "","","")
+        Log.d("userData",Gson().toJson(newUser))
+        service.join(newUser)
+            .enqueue(object : Callback<UserDto> {
+                override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
+                    if(response.isSuccessful){
+                        val result = response.body()
+                        findNavController().navigate(R.id.action_signup_to_profile)
+                        Log.d("resultSuccess",result.toString())
+                    }else{
+                        Toast.makeText(requireContext(), "회원가입에 실패하였습니다", Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                        Log.w("resultFail", response.toString())
+                    }
+                }
+                override fun onFailure(call: Call<UserDto>, t: Throwable) {
+                    Toast.makeText(requireContext(), "서버와의 통신에 실패하였습니다. 네트워크 통신 상태를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                    Log.w("requestFail", t.toString())
+                }
+            })
     }
 
     override fun onDestroyView() {

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- [2] 프로필 이미지 (수정 버튼 포함) -->
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="32dp">
+
+            <!-- 프로필 이미지 (클릭 시 변경 가능하게 구현 예정) -->
+            <ImageView
+                android:id="@+id/image_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_modify_person"
+                android:background="@drawable/rounded_button_border"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/profile_image" />
+
+            <!-- 플러스 아이콘: 프로필 변경 버튼 -->
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:src="@drawable/ic_plus_circle"
+                android:background="@drawable/bg_circle_background"
+                android:contentDescription="@string/profile_image"
+                android:padding="4dp"/>
+        </FrameLayout>
+
+        <!-- [3] 아이디 입력 영역 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아이디"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="40dp" />
+
+        <EditText
+            android:id="@+id/edit_user_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="새로운 아이디를 입력해주세요"
+            android:background="@android:color/transparent"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 구분선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <!-- [4] 이름 입력 영역 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginTop="32dp" />
+
+        <EditText
+            android:id="@+id/edit_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="새로운 이름을 입력해주세요"
+            android:background="@android:color/transparent"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:paddingVertical="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 구분선 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0" />
+
+        <!-- [5] 변경 버튼 -->
+        <Button
+            android:id="@+id/btn_modify"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="64dp"
+            android:text="변경"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_button_border" />
+    </LinearLayout>
+</ScrollView>

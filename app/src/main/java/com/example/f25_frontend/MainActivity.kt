@@ -1,6 +1,5 @@
 package com.example.f25_frontend
 
-//import com.google.firebase.referencecode.storage.R
 import android.Manifest
 import android.content.res.Resources
 import android.os.Build
@@ -18,11 +17,18 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
+import android.view.View
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.transition.Visibility
+import com.example.f25_frontend.databinding.ActivityMainBinding
 import com.example.f25_frontend.utils.FirebaseMsgUtil
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.messaging.messaging
 
@@ -61,9 +67,21 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
-        FirebaseMsgUtil
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val navigationController = findNavController(R.id.nav_host)
+        NavigationUI.setupWithNavController(binding.navBarBottom, navigationController)
+        binding.btnPopBackStack.setOnClickListener{
+            navigationController.popBackStack()
+        }
+        binding.btnNotify.setOnClickListener{
+            navigationController.navigate(R.id.notifyFragment)
+        }
+//        scope에 로그인값이 없을 경우
+        if(false){
+            binding.navBarTop.visibility= View.INVISIBLE
+            binding.navBarBottom.visibility= View.INVISIBLE
+        }
 
         askNotificationPermission()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -96,34 +114,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
 //         [END handle_data_extras]
-        findViewById<Button>(R.id.logTokenButton).setOnClickListener {
-            // Get token
-            // [START log_reg_token]
-            Firebase.messaging.token.addOnCompleteListener(
-                OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                        return@OnCompleteListener
-                    }
+//        토큰 얻기 버튼 샘플
+//        findViewById<Button>(R.id.logTokenButton).setOnClickListener {
+//            // Get token
+//            // [START log_reg_token]
+//            Firebase.messaging.token.addOnCompleteListener(
+//                OnCompleteListener { task ->
+//                    if (!task.isSuccessful) {
+//                        Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+//                        return@OnCompleteListener
+//                    }
+//
+//                    // Get new FCM registration token
+//                    val token = task.result
+//
+//                    // Log and toast
+//                    val msg = getString(R.string.msg_token_fmt, token)
+//                    Log.d(TAG, msg)
+//                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//                },
+//            )
+//            // [END log_reg_token]
+//        }
 
-                    // Get new FCM registration token
-                    val token = task.result
-
-                    // Log and toast
-                    val msg = getString(R.string.msg_token_fmt, token)
-                    Log.d(TAG, msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                },
-            )
-            // [END log_reg_token]
-        }
-
-
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+//        툴바 서포트 액션(차후 확인)
+//        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+//        setSupportActionBar(toolbar)
 
         val host: NavHostFragment = supportFragmentManager
-            .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
+            .findFragmentById(R.id.nav_host) as NavHostFragment? ?: return
 
         // Set up Action Bar
         val navController = host.navController
@@ -153,6 +172,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
+
+//        binding.btnExplore.setOnClickListener(){
+//            findNavController().navigate(R.id.action_bottommenu_to_explore)
+//        }
+////      홈으로 돌아가기 버튼
+//        binding.btnMainpage.setOnClickListener(){
+//            findNavController().navigate(R.id.action_bottommenu_to_todo)
+//        }
+////      마이페이지 버튼
+//        binding.btnMypage.setOnClickListener(){
+//            findNavController().navigate(R.id.action_bottommenu_to_mypage)
+//        }
         // TODO STEP 9.3 - Use NavigationUI to set up Bottom Nav
 //        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
 //        bottomNav?.setupWithNavController(navController)

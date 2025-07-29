@@ -20,7 +20,7 @@ class ExploreUserFragment : Fragment() {
     ): View {
         _binding = FragmentExploreUserBinding.inflate(inflater, container, false)
         binding.btnExploreListReturn.setOnClickListener(){
-            findNavController().navigate(R.id.action_exploreUserFragment_to_exploreListFragment)
+            findNavController().popBackStack()
         }
         // 로그인 버튼
 //        binding.btnProfileSave.setOnClickListener {

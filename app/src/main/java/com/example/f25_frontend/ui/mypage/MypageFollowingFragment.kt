@@ -19,9 +19,10 @@ class MypageFollowingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMypageFollowingBinding.inflate(inflater, container, false)
-        binding.btnReturnMypage.setOnClickListener(){
-            findNavController().navigate(R.id.action_mypageFollowingFragment_to_mypageFragment)
-        }
+//        binding.btnReturnMypage.setOnClickListener(){
+//            findNavController().navigate(R.id.action_mypage_following_to_mypage)
+//        }
+
         // 로그인 버튼
 //        binding.btnProfileSave.setOnClickListener {
 ////            val id = binding.editTextId.text.toString().trim()

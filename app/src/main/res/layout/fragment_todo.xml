@@ -58,52 +58,5 @@
             android:padding="12dp"
             android:layout_marginTop="4dp"/>
 
-        <!-- 하단 탭바 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:background="@android:color/white"
-            android:elevation="4dp"
-            android:weightSum="3"
-            android:gravity="center_vertical"
-            android:paddingBottom="8dp">
-
-            <ImageButton
-                android:id="@+id/navHome"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_home"
-                app:tint="@android:color/black"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/home">
-
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/navExplore"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_globe"
-                app:tint="@android:color/black"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/world">
-            </ImageButton>
-
-            <ImageButton
-                android:id="@+id/navMypage"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_profile"
-                app:tint="@android:color/black"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/profile">
-            </ImageButton>
-
-        </LinearLayout>
-
     </LinearLayout>
 </layout>

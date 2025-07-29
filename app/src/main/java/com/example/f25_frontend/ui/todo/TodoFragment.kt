@@ -1,6 +1,8 @@
 package com.example.f25_frontend.ui.todo
 
 import android.os.Bundle
+import android.util.JsonReader
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +15,11 @@ import com.example.f25_frontend.databinding.FragmentTodoBinding
 import com.example.f25_frontend.R
 import com.example.f25_frontend.CategoryAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.f25_frontend.MyApplication
 import com.example.f25_frontend.model.Category
-import java.time.LocalDate
+import com.example.f25_frontend.model.UserDto
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 class TodoFragment : Fragment() {
 
@@ -22,41 +27,23 @@ class TodoFragment : Fragment() {
     private val binding get() = _binding!!
 
 //    private lateinit var weekCalendarView: WeekCalendarView
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: CategoryAdapter
-    private lateinit var tvMonthYear: TextView
-
-    private var selectedDate: LocalDate? = null
-    private val categoryList = mutableListOf(
-        Category("카테고리 1"),
-        Category("카테고리 2"),
-        Category("카테고리 3")
-    )
+//    private lateinit var recyclerView: RecyclerView
+//    private lateinit var adapter: CategoryAdapter
+//    private lateinit var tvMonthYear: TextView
+//
+//    private var selectedDate: LocalDate? = null
+//    private val categoryList = mutableListOf(
+//        Category("카테고리 1"),
+//        Category("카테고리 2"),
+//        Category("카테고리 3")
+//    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTodoBinding.inflate(inflater, container, false)
-        binding.navExplore.setOnClickListener(){
-            findNavController().navigate(R.id.action_todoFragment_to_exploreFragment)
-        }
-        binding.navMypage.setOnClickListener(){
-            findNavController().navigate(R.id.action_todoFragment_to_mypageFragment)
-        }
-////            val id = binding.editTextId.text.toString().trim()
-////            val pw = binding.editTextPassword.text.toString().trim()
-//            if (id.isNotEmpty() && pw.isNotEmpty()) {
-//                findNavController().navigate(R.id.action_loginFragment_to_todoFragment)
-//            }
-//        }
-//        weekCalendarView = binding.weekCalendarView
-//        recyclerView = binding.categoryRecyclerView
-//        tvMonthYear = binding.tvMonthYear
-//
-//        setupWeekCalendar()
-//        setupCategoryList()
-
+        Log.d("resultTodo:", MyApplication.prefs.getString("access_token"))
         return binding.root
     }
 

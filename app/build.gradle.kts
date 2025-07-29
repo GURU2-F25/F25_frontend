@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 //    Using FIREBASE
     id("com.google.gms.google-services")
+//    네비게이션 데이터 통신
+//    id("androidx.navigation.safeargs")
+    id ("kotlin-parcelize")
 }
 android {
     namespace = "com.example.f25_frontend"
@@ -60,13 +63,20 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation("androidx.navigation:navigation-fragment-ktx:2.4.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.4.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-//    FASTAPI 데이터 통신을 위한 RETROFIT 라이브러리 추가
+
+
+//    FASTAPI 데이터 통신을 위한 RETROFIT2 라이브러리 추가
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-//    implementation("com.google.code.gson:gson:2.9.0")
+//    비동기통신을 위한 coroutine 라이브러리 추가
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0") //Coroutine
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1") //Coroutine-Android
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1") //LifecycleScope
 }
 
