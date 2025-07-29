@@ -3,22 +3,13 @@ package com.example.f25_frontend.ui.todo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.f25_frontend.databinding.FragmentTodoBinding
-import com.example.f25_frontend.MyApplication
 import com.example.f25_frontend.R
 import com.example.f25_frontend.model.Category
 import com.example.f25_frontend.ui.adapter.WeekAdapter
@@ -172,7 +163,7 @@ class TodoFragment : Fragment() {
             tvName.setTextColor(category.color)
 
             progressBar.progress = percent
-            progressBar.progressTintList = ColorStateList.valueOf(category.color)
+            progressBar.progressTintList = ColorStateList.valueOf(category.color) // ✅ 색상 적용
             tvPercent.text = "$percent%"
             tvPercent.setTextColor(category.color)
 

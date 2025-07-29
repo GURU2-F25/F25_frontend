@@ -90,6 +90,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp" /> <!-- 간격 넉넉히 줌 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

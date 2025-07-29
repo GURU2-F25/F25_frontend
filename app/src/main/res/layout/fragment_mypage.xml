@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/user_id"
                         android:textColor="#00584A"
-                        android:background="@color/purple_200"
+                        android:background="@color/material_dynamic_neutral10"
                         android:textSize="12sp"
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="4dp"

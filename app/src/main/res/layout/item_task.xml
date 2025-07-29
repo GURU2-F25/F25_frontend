@@ -10,6 +10,7 @@
     android:layout_marginBottom="2dp"
     android:gravity="center_vertical">
 
+    <!-- 체크박스: 포커스 비활성화해야 클릭 가능 -->
     <CheckBox
         android:id="@+id/cbTask"
         android:layout_width="wrap_content"
