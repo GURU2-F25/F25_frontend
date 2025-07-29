@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 기존 테마나 스타일이 있다면 여기에 유지 -->
+
+    <!-- 색상 원형 버튼 스타일 -->
+    <style name="ColorCircle">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/bg_button_circle</item>
+    </style>
+
+
+</resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카테고리 변경"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 카테고리명 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카테고리명"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/etCategoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="카테고리 이름 입력"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#DDDDDD"
+            android:padding="8dp"
+            android:minHeight="48dp"
+            android:layout_marginBottom="24dp"
+            android:inputType="text" />
+
+        <!-- 테마 색상 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="테마 색상"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 색상 선택 영역 -->
+        <LinearLayout
+            android:id="@+id/colorRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
+
+            <!-- 색상 하나당: FrameLayout + View -->
+            <FrameLayout android:id="@+id/colorOption1" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#bd413b" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption2" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#d07192" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption3" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#e69a98" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption4" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#f5df8f" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption5" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#b7dfc2" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption6" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#639c6f" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption7" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#8ea5f1" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption8" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#6782eb" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+            <FrameLayout android:id="@+id/colorOption9" android:layout_width="24dp" android:layout_height="24dp" android:layout_margin="4dp">
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:backgroundTint="#3b3b3b" android:background="@drawable/bg_color_circle" android:clickable="true" android:focusable="true" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- 저장 버튼 -->
+        <Button
+            android:id="@+id/btnSaveCategory"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="변경하기"
+            android:backgroundTint="#333333"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:minHeight="48dp" />
+
+    </LinearLayout>
+</ScrollView>

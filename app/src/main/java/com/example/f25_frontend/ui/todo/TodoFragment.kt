@@ -1,232 +1,182 @@
 package com.example.f25_frontend.ui.todo
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.f25_frontend.databinding.FragmentTodoBinding
 import com.example.f25_frontend.MyApplication
+import com.example.f25_frontend.R
+import com.example.f25_frontend.model.Category
+import com.example.f25_frontend.ui.adapter.WeekAdapter
+import com.example.f25_frontend.viewmodel.CategoryViewModel
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 class TodoFragment : Fragment() {
 
-    private var _binding: FragmentTodoBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var weekRecyclerView: RecyclerView
+    private lateinit var tvMonthYear: TextView
+    private lateinit var btnPrevWeek: ImageButton
+    private lateinit var btnNextWeek: ImageButton
+    private lateinit var btnEditCategory: ImageButton
+    private lateinit var categoryRecyclerView: RecyclerView
+    private lateinit var categoryProgressContainer: LinearLayout
+    private lateinit var tvSelectedDateProgress: TextView
 
-//    private lateinit var weekCalendarView: WeekCalendarView
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var adapter: CategoryAdapter
-//    private lateinit var tvMonthYear: TextView
-//
-//    private var selectedDate: LocalDate? = null
-//    private val categoryList = mutableListOf(
-//        Category("카테고리 1"),
-//        Category("카테고리 2"),
-//        Category("카테고리 3")
-//    )
+    private lateinit var weekAdapter: WeekAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
+
+    private val categoryViewModel: CategoryViewModel by activityViewModels()
+    private var selectedDate: LocalDate = LocalDate.now()
+    private var currentWeekStart: LocalDate = LocalDate.now().with(DayOfWeek.MONDAY)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTodoBinding.inflate(inflater, container, false)
-        Log.d("resultTodo:", MyApplication.prefs.getString("access_token"))
-        return binding.root
+        return inflater.inflate(R.layout.fragment_todo, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        weekRecyclerView = view.findViewById(R.id.weekRecyclerView)
+        tvMonthYear = view.findViewById(R.id.tvMonthYear)
+        btnPrevWeek = view.findViewById(R.id.btnPrevWeek)
+        btnNextWeek = view.findViewById(R.id.btnNextWeek)
+        btnEditCategory = view.findViewById(R.id.btnEditCategory)
+        categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView)
+        categoryProgressContainer = view.findViewById(R.id.categoryProgressContainer)
+        tvSelectedDateProgress = view.findViewById(R.id.tvSelectedDateProgress)
 
+        setupWeekView()
+        setupCategoryList()
 
+        categoryViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
+            selectedDate = date
+            weekAdapter.updateSelectedDate(date)
+            categoryAdapter.updateSelectedDate(date)
+        }
+
+        categoryViewModel.categoriesForSelectedDate.observe(viewLifecycleOwner) { categories ->
+            categoryAdapter.updateCategories(categories)
+            updateCategoryProgress(categories)
+        }
+
+        btnPrevWeek.setOnClickListener { shiftWeek(-1) }
+        btnNextWeek.setOnClickListener { shiftWeek(1) }
+        btnEditCategory.setOnClickListener {
+            findNavController().navigate(R.id.action_todoFragment_to_categorySettingFragment)
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setupWeekView() {
+        val weekList = (0 until 7).map { currentWeekStart.plusDays(it.toLong()) }
+        tvMonthYear.text = "${currentWeekStart.year}년 ${currentWeekStart.monthValue}월"
+        val screenWidth = resources.displayMetrics.widthPixels
+
+        weekAdapter = WeekAdapter(weekList, screenWidth) { date ->
+            categoryViewModel.updateSelectedDate(date)
+            refreshTaskListForDate(date)
+        }
+
+        weekRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        weekRecyclerView.adapter = weekAdapter
     }
 
-//    private fun setupWeekCalendar() {
-//        val today = LocalDate.now()
-//        val startDate = today.minusWeeks(52)
-//        val endDate = today.plusWeeks(52)
-//
-////        weekCalendarView.setup(startDate, endDate, java.time.DayOfWeek.MONDAY)
-////        weekCalendarView.scrollToWeek(today)
-////        tvMonthYear.text = "${today.year}년 ${today.monthValue}월"
-////
-////        weekCalendarView.dayBinder =
-////            object : com.kizitonwose.calendar.view.WeekDayBinder<WeekDayContainer> {
-////                override fun create(view: View) = WeekDayContainer(view)
-////                override fun bind(container: WeekDayContainer, data: WeekDay) {
-////                    val date = data.date
-////                    container.day = data
-////
-////                    container.dayText.text = date.dayOfMonth.toString()
-////                    container.weekDayText.text =
-////                        date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
-////
-////                    // 날짜 클릭 → 선택 표시 + 선택 날짜 저장
-////                    container.view.setOnClickListener {
-////                        selectedDate = date
-////                        weekCalendarView.notifyCalendarChanged()
-////                    }
-////
-////                    // 선택된 날짜만 회색 배경
-////                    if (selectedDate == date) {
-////                        container.view.setBackgroundResource(R.drawable.bg_selected_date)
-////                    } else {
-////                        container.view.background = null
-////                    }
-////                }
-////            }
-////
-////        // 스와이프 시 상단 년/월 변경
-////        weekCalendarView.weekScrollListener = { week ->
-////            val midDate = week.days[3].date
-////            tvMonthYear.text = "${midDate.year}년 ${midDate.monthValue}월"
-////        }
-//    }
+    private fun setupCategoryList() {
+        categoryAdapter = CategoryAdapter(
+            categories = emptyList(),
+            selectedDate = selectedDate,
+            onAddTaskClick = { category ->
+                showAddTaskDialog(category)
+            },
+            onTaskChecked = { task ->
+                task.isDone = !task.isDone
+                categoryViewModel.updateSelectedDate(selectedDate)
+            },
+            onTaskDeleted = { task ->
+                categoryViewModel.removeTask(selectedDate, task)
+                categoryViewModel.updateSelectedDate(selectedDate)
+            }
+        )
 
-//    private fun setupCategoryList() {
-//        adapter = CategoryAdapter(categoryList) { category ->
-//            // 선택된 날짜가 없으면 오늘 날짜로
-//            val targetDate = selectedDate ?: LocalDate.now()
-//
-//            val dialogView = layoutInflater.inflate(R.layout.dialog_add_task, null)
-//            val etTaskTitle = dialogView.findViewById<android.widget.EditText>(R.id.etTaskTitle)
-//
-////            val dialog = AlertDialog.Builder(this)
-////                .setView(dialogView)
-////                .create()
-////
-////            dialogView.findViewById<android.widget.Button>(R.id.btnAddTask).setOnClickListener {
-////                val title = etTaskTitle.text.toString().trim()
-////                if (title.isNotEmpty()) {
-////                    val newTask = Task(title, targetDate)
-////                    category.tasks.add(newTask) // 선택된 카테고리에만 추가
-////                    recyclerView.adapter?.notifyDataSetChanged()
-////                    dialog.dismiss()
-////                }
-////            }
-////            dialog.show()
-//        }
-//
-////        recyclerView.layoutManager = LinearLayoutManager(this)
-////        recyclerView.adapter = adapter
-//    }
+        categoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        categoryRecyclerView.adapter = categoryAdapter
+    }
+
+    private fun shiftWeek(weeks: Long) {
+        currentWeekStart = currentWeekStart.plusWeeks(weeks)
+        setupWeekView()
+        categoryViewModel.updateSelectedDate(currentWeekStart)
+    }
+
+    private fun showAddTaskDialog(category: Category) {
+        val dialog = AddTaskDialog(
+            context = requireContext(),
+            category = category,
+            date = selectedDate,
+            onTaskAdded = {
+                categoryViewModel.updateSelectedDate(selectedDate)
+            }
+        )
+        dialog.show()
+    }
+
+    private fun refreshTaskListForDate(date: LocalDate) {}
+
+    private fun updateCategoryProgress(categories: List<Category>) {
+        categoryProgressContainer.removeAllViews()
+
+        // 전체 목표 달성률 계산
+        val totalTasks = categories.sumOf { it.tasksByDate[selectedDate]?.size ?: 0 }
+        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it.isDone } ?: 0 }
+
+        if (totalTasks > 0) {
+            val percent = (doneTasks * 100) / totalTasks
+            tvSelectedDateProgress.text = "${selectedDate.dayOfMonth}일의 목표 달성률 ${percent}%"
+            tvSelectedDateProgress.setTextColor(Color.BLACK)
+        } else {
+            tvSelectedDateProgress.text = "${selectedDate.dayOfMonth}일은 등록된 일정이 없습니다"
+            tvSelectedDateProgress.setTextColor(Color.GRAY)
+        }
+
+        for (category in categories) {
+            val tasks = category.tasksByDate[selectedDate] ?: emptyList()
+            if (tasks.isEmpty()) continue
+
+            val done = tasks.count { it.isDone }
+            val percent = (done * 100) / tasks.size
+
+            val progressLayout = LayoutInflater.from(context)
+                .inflate(R.layout.item_category_progress, categoryProgressContainer, false)
+
+            val tvName = progressLayout.findViewById<TextView>(R.id.tvCategoryName)
+            val progressBar = progressLayout.findViewById<ProgressBar>(R.id.progressBar)
+            val tvPercent = progressLayout.findViewById<TextView>(R.id.tvProgressPercent)
+
+            tvName.text = category.name
+            tvName.setTextColor(category.color)
+
+            progressBar.progress = percent
+            progressBar.progressTintList = ColorStateList.valueOf(category.color)
+            tvPercent.text = "$percent%"
+            tvPercent.setTextColor(category.color)
+
+            categoryProgressContainer.addView(progressLayout)
+        }
+    }
 }
-
-//package com.example.f25_frontend.todolist
-//
-//import android.os.Bundle
-//import android.view.View
-//import android.widget.TextView
-//import androidx.appcompat.app.AlertDialog
-//import androidx.appcompat.app.AppCompatActivity
-//import androidx.recyclerview.widget.LinearLayoutManager
-//import androidx.recyclerview.widget.RecyclerView
-//import com.example.f25_frontend.model.Category
-//import com.example.f25_frontend.model.Task
-//import com.kizitonwose.calendar.core.WeekDay
-//import com.kizitonwose.calendar.view.WeekCalendarView
-//import java.time.LocalDate
-//import java.time.format.TextStyle
-//import java.util.Locale
-//
-//class MainActivity : AppCompatActivity() {
-//
-//    private lateinit var weekCalendarView: WeekCalendarView
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var adapter: CategoryAdapter
-//    private lateinit var tvMonthYear: TextView
-//
-//    private var selectedDate: LocalDate? = null
-//    private val categoryList = mutableListOf(
-//        Category("카테고리 1"),
-//        Category("카테고리 2"),
-//        Category("카테고리 3")
-//    )
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//
-//        weekCalendarView = findViewById(R.id.weekCalendarView)
-//        recyclerView = findViewById(R.id.categoryRecyclerView)
-//        tvMonthYear = findViewById(R.id.tvMonthYear)
-//
-//        setupWeekCalendar()
-//        setupCategoryList()
-//    }
-//
-//    private fun setupWeekCalendar() {
-//        val today = LocalDate.now()
-//        val startDate = today.minusWeeks(52)
-//        val endDate = today.plusWeeks(52)
-//
-//        weekCalendarView.setup(startDate, endDate, java.time.DayOfWeek.MONDAY)
-//        weekCalendarView.scrollToWeek(today)
-//        tvMonthYear.text = "${today.year}년 ${today.monthValue}월"
-//
-//        weekCalendarView.dayBinder =
-//            object : com.kizitonwose.calendar.view.WeekDayBinder<WeekDayContainer> {
-//                override fun create(view: View) = WeekDayContainer(view)
-//                override fun bind(container: WeekDayContainer, data: WeekDay) {
-//                    val date = data.date
-//                    container.day = data
-//
-//                    container.dayText.text = date.dayOfMonth.toString()
-//                    container.weekDayText.text =
-//                        date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
-//
-//                    // 날짜 클릭 → 선택 표시 + 선택 날짜 저장
-//                    container.view.setOnClickListener {
-//                        selectedDate = date
-//                        weekCalendarView.notifyCalendarChanged()
-//                    }
-//
-//                    // 선택된 날짜만 회색 배경
-//                    if (selectedDate == date) {
-//                        container.view.setBackgroundResource(R.drawable.bg_selected_date)
-//                    } else {
-//                        container.view.background = null
-//                    }
-//                }
-//            }
-//
-//        // 스와이프 시 상단 년/월 변경
-//        weekCalendarView.weekScrollListener = { week ->
-//            val midDate = week.days[3].date
-//            tvMonthYear.text = "${midDate.year}년 ${midDate.monthValue}월"
-//        }
-//    }
-//
-//    private fun setupCategoryList() {
-//        adapter = CategoryAdapter(categoryList) { category ->
-//            // 선택된 날짜가 없으면 오늘 날짜로
-//            val targetDate = selectedDate ?: LocalDate.now()
-//
-//            val dialogView = layoutInflater.inflate(R.layout.dialog_add_task, null)
-//            val etTaskTitle = dialogView.findViewById<android.widget.EditText>(R.id.etTaskTitle)
-//
-//            val dialog = AlertDialog.Builder(this)
-//                .setView(dialogView)
-//                .create()
-//
-//            dialogView.findViewById<android.widget.Button>(R.id.btnAddTask).setOnClickListener {
-//                val title = etTaskTitle.text.toString().trim()
-//                if (title.isNotEmpty()) {
-//                    val newTask = Task(title, targetDate)
-//                    category.tasks.add(newTask) // 선택된 카테고리에만 추가
-//                    recyclerView.adapter?.notifyDataSetChanged()
-//                    dialog.dismiss()
-//                }
-//            }
-//            dialog.show()
-//        }
-//
-//        recyclerView.layoutManager = LinearLayoutManager(this)
-//        recyclerView.adapter = adapter
-//    }
-//}

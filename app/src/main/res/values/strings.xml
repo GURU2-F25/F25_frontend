@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 앱 이름 -->
     <string name="app_name">F25 Frontend</string>
 
     <string name="url">http://f25-backend.onrender.com/</string>
@@ -8,14 +10,44 @@
 
     <!-- 달력 -->
     <string name="default_month">2025년 7월</string>
+    <string name="calendar_desc">달력</string>
+    <string name="month_year_placeholder">2025년 8월</string>
+    <string name="month_year_format">%1$d월 %2$d년</string>
+    <string name="prev_week">이전 주</string>
+    <string name="next_week">다음 주</string>
 
     <!-- 탭바 -->
     <string name="home">홈</string>
     <string name="world">탐색</string>
     <string name="profile">프로필</string>
-    <string name="calendar_desc">달력</string>
+
+    <!-- 일정 -->
     <string name="category_sample">카테고리</string>
     <string name="add_schedule_desc">일정 추가</string>
+    <string name="task_placeholder">할 일</string>
+    <string name="btn_more">더보기</string>
+    <string name="notification">알림</string>
+    <string name="schedule_category">일정 카테고리</string>
+    <string name="my_category">나의 카테고리</string>
+    <string name="add_category">카테고리 추가</string>
+    <string name="edit_category">카테고리 수정</string>
+
+    <!-- 접근성 -->
+    <string name="desc_lock_icon">잠금 아이콘</string>
+    <string name="desc_add_task">일정 추가</string>
+    <string name="category_icon_desc">카테고리 아이콘</string>
+
+    <!-- 버튼 -->
+    <string name="category_name_sample">카테고리 1</string>
+    <string name="edit">변경</string>
+    <string name="delete">삭제</string>
+
+    <string name="lock_icon">잠금 아이콘</string>
+    <string name="category_name_placeholder">카테고리 이름</string>
+    <string name="plus_sign">＋</string>
+    <string name="percent_zero">0%</string>
+
+    <!-- 로그인 -->
 
     <!-- 마이페이지 텍스트 -->
     <string name="user_name">사용자이름</string>
@@ -39,7 +71,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
     <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Password must be &gt;5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
     <string name="quickstart_message">Click the SUBSCRIBE TO WEATHER button below to subscribe to the
