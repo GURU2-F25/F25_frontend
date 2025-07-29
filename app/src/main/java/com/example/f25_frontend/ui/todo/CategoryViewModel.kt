@@ -38,28 +38,48 @@ class CategoryViewModel : ViewModel() {
         _categoriesForSelectedDate.value = categoryMap[date]
     }
 
+    // ✅ 내부 selectedDate 기준 추가 함수
     fun addCategory(category: Category) {
         val date = _selectedDate.value ?: return
-        val list = categoryMap.getOrPut(date) { defaultCategories.map { it.copy() }.toMutableList() }
-        list.add(category)
-        _categoriesForSelectedDate.value = list.toList()
+        addCategory(date, category)
     }
 
     fun updateCategory(old: Category, new: Category) {
         val date = _selectedDate.value ?: return
-        val list = categoryMap[date]
-        val index = list?.indexOfFirst { it.id == old.id }
-        if (index != null && index != -1) {
-            list[index] = new
-            _categoriesForSelectedDate.value = list.toList()
-        }
+        updateCategory(date, old, new)
     }
 
     fun deleteCategory(category: Category) {
         val date = _selectedDate.value ?: return
-        val list = categoryMap[date]
-        list?.removeIf { it.id == category.id }
-        _categoriesForSelectedDate.value = list?.toList() ?: emptyList()
+        deleteCategory(date, category)
+    }
+
+    // ✅ 날짜 지정 가능한 오버로드 함수들
+    fun addCategory(date: LocalDate, category: Category) {
+        val list = categoryMap.getOrPut(date) { defaultCategories.map { it.copy() }.toMutableList() }
+        list.add(category)
+        if (_selectedDate.value == date) {
+            _categoriesForSelectedDate.value = list.toList()
+        }
+    }
+
+    fun updateCategory(date: LocalDate, old: Category, new: Category) {
+        val list = categoryMap[date] ?: return
+        val index = list.indexOfFirst { it.id == old.id }
+        if (index != -1) {
+            list[index] = new
+            if (_selectedDate.value == date) {
+                _categoriesForSelectedDate.value = list.toList()
+            }
+        }
+    }
+
+    fun deleteCategory(date: LocalDate, category: Category) {
+        val list = categoryMap[date] ?: return
+        list.removeIf { it.id == category.id }
+        if (_selectedDate.value == date) {
+            _categoriesForSelectedDate.value = list.toList()
+        }
     }
 
     fun removeTask(date: LocalDate, task: Task) {
@@ -71,6 +91,8 @@ class CategoryViewModel : ViewModel() {
                 category.tasksByDate[date] = updatedTasks
             }
         }
-        _categoriesForSelectedDate.value = list.toList()
+        if (_selectedDate.value == date) {
+            _categoriesForSelectedDate.value = list.toList()
+        }
     }
 }

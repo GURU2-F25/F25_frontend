@@ -14,15 +14,16 @@ import com.example.f25_frontend.R
 import com.example.f25_frontend.model.Category
 import com.example.f25_frontend.ui.category.CategorySettingAdapter
 import com.example.f25_frontend.viewmodel.CategoryViewModel
+import java.time.LocalDate
 
 class CategorySettingFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var btnAddCategory: Button
-    private lateinit var btnBack: ImageButton
     private lateinit var adapter: CategorySettingAdapter
 
     private val viewModel: CategoryViewModel by activityViewModels()
+    private var selectedDate: LocalDate = LocalDate.now()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +35,24 @@ class CategorySettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = view.findViewById(R.id.recyclerCategory)
         btnAddCategory = view.findViewById(R.id.btnAddCategory)
-        btnBack = view.findViewById(R.id.btnBack)
+
+        // activity의 상단바에 있는 뒤로가기 버튼을 제어
+        requireActivity().findViewById<ImageButton>(R.id.btnPopBackStack)?.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
         adapter = CategorySettingAdapter(
             mutableListOf(),
             onEditClick = { showEditCategoryDialog(it) },
-            onDeleteClick = { viewModel.deleteCategory(it) }
+            onDeleteClick = { viewModel.deleteCategory(selectedDate, it) }
         )
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+
+        viewModel.selectedDate.observe(viewLifecycleOwner) {
+            selectedDate = it
+        }
 
         viewModel.categoriesForSelectedDate.observe(viewLifecycleOwner) {
             adapter.updateCategories(it)
@@ -51,10 +60,6 @@ class CategorySettingFragment : Fragment() {
 
         btnAddCategory.setOnClickListener {
             showAddCategoryDialog()
-        }
-
-        btnBack.setOnClickListener {
-            requireActivity().onBackPressed()
         }
     }
 
@@ -77,7 +82,6 @@ class CategorySettingFragment : Fragment() {
             val frame = view.findViewById<FrameLayout>(id)
             val colorView = frame.getChildAt(0)
 
-
             if (defaultColor == color) {
                 frame.foreground = ContextCompat.getDrawable(requireContext(), R.drawable.bg_color_circle_selected)
             } else {
@@ -86,13 +90,11 @@ class CategorySettingFragment : Fragment() {
 
             colorView.setOnClickListener {
                 onColorSelected(color)
-
                 allFrames.forEach { it.foreground = null }
                 frame.foreground = ContextCompat.getDrawable(requireContext(), R.drawable.bg_color_circle_selected)
             }
         }
     }
-
 
     private fun showAddCategoryDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_category, null)
@@ -108,7 +110,7 @@ class CategorySettingFragment : Fragment() {
             val name = etCategoryName.text.toString().trim()
             if (name.isNotEmpty()) {
                 val category = Category(name = name, color = selectedColor[0])
-                viewModel.addCategory(category)
+                viewModel.addCategory(selectedDate, category)
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "카테고리 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
@@ -134,7 +136,7 @@ class CategorySettingFragment : Fragment() {
             val newName = etCategoryName.text.toString().trim()
             if (newName.isNotEmpty()) {
                 val updated = category.copy(name = newName, color = selectedColor[0])
-                viewModel.updateCategory(category, updated)
+                viewModel.updateCategory(selectedDate, category, updated)
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "카테고리 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
