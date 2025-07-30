@@ -14,6 +14,7 @@ import com.example.f25_frontend.R
 import com.example.f25_frontend.model.Category
 import com.example.f25_frontend.model.Task
 import com.example.f25_frontend.ui.adapter.WeekAdapter
+import com.example.f25_frontend.ui.dialog.AddTaskDialog
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.retrofitUtil
 import com.example.f25_frontend.viewmodel.CategoryViewModel
@@ -143,16 +144,47 @@ class TodoFragment : Fragment() {
     }
 
     private fun showAddTaskDialog(category: Category) {
-        val dialog = AddTaskDialog(
-            context = requireContext(),
-            category = category,
-            date = selectedDate,
-            onTaskAdded = {
-                categoryViewModel.updateSelectedDate(selectedDate)
+        val dialog = AddTaskDialog.newInstance(category, selectedDate)
+
+        dialog.setOnTaskAddedListener { task, repeatDaily, repeatWeekly ->
+            when {
+                repeatDaily -> {
+                    // 1주간 (월~일) 반복
+                    val weekStart = selectedDate.with(java.time.DayOfWeek.MONDAY)
+                    for (i in 0..6) {
+                        val day = weekStart.plusDays(i.toLong())
+                        category.tasksByDate.getOrPut(day) { mutableListOf() }
+                            .add(task.copy(date = day))
+                    }
+                }
+
+                repeatWeekly -> {
+                    // 같은 요일 기준 4주 반복
+                    val originalDayOfWeek = selectedDate.dayOfWeek
+                    for (i in 0..3) {
+                        val weekDate = selectedDate.plusWeeks(i.toLong())
+                        val sameWeekday = weekDate.with(originalDayOfWeek)
+                        category.tasksByDate.getOrPut(sameWeekday) { mutableListOf() }
+                            .add(task.copy(date = sameWeekday))
+                    }
+                }
+
+                else -> {
+                    // 단일 일정
+                    category.tasksByDate.getOrPut(selectedDate) { mutableListOf() }
+                        .add(task)
+                }
             }
-        )
-        dialog.show()
+
+            categoryViewModel.updateSelectedDate(selectedDate)
+        }
+
+        dialog.show(parentFragmentManager, "AddTaskDialog")
     }
+
+
+
+
 
     private fun refreshTaskListForDate(date: LocalDate) {}
 

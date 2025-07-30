@@ -46,7 +46,7 @@
     <Button
         android:id="@+id/btnFollow"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:paddingHorizontal="20dp"
         android:text="팔로우"
         android:textSize="13sp"
