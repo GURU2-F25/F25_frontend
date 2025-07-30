@@ -36,6 +36,11 @@ class CategorySettingFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerCategory)
         btnAddCategory = view.findViewById(R.id.btnAddCategory)
 
+        // activity의 상단바에 있는 뒤로가기 버튼을 제어
+        requireActivity().findViewById<ImageButton>(R.id.btnPopBackStack)?.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         adapter = CategorySettingAdapter(
             mutableListOf(),
             onEditClick = { showEditCategoryDialog(it) },

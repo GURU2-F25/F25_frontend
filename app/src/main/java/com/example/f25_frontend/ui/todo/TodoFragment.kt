@@ -96,8 +96,6 @@ class TodoFragment : Fragment() {
         btnPrevWeek.setOnClickListener { shiftWeek(-1) }
         btnNextWeek.setOnClickListener { shiftWeek(1) }
         btnEditCategory.setOnClickListener {
-//            해당 부분 navigate가 아닌 dialog로 작성
-//                    참고 -> https://developer.android.com/develop/ui/views/components/dialogs?hl=ko
             findNavController().navigate(R.id.action_todoFragment_to_categorySettingFragment)
         }
     }
