@@ -47,20 +47,20 @@
             android:text="탈퇴 후 데이터는 복구할 수 없습니다."
             android:textColor="#444444"
             android:buttonTint="#B0B0B0"
-            android:layout_marginBottom="2dp" />
+            android:layout_marginBottom="40dp" />
 
         <!-- 탈퇴 버튼 -->
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/btnWithdraw"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="48dp"
             android:text="탈퇴"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:backgroundTint="#D32F2F"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="14dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/rounded_red_button" />
 
     </LinearLayout>

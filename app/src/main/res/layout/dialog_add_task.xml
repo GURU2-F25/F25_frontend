@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@android:color/white"
+        android:background="@drawable/bg_dialog_card"
         android:padding="24dp"
         android:elevation="4dp">
 
@@ -23,6 +23,7 @@
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
+            android:background="@drawable/bg_category_tag"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:layout_marginBottom="12dp" />
@@ -82,16 +83,14 @@
             android:layout_marginBottom="16dp" />
 
         <!-- 추가하기 버튼 -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAddTaskConfirm"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_button_r12"
+            android:layout_height="48dp"
             android:text="추가하기"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:layout_marginBottom="20dp" />
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:background="#2a2a2a" />
 
     </LinearLayout>
 </ScrollView>

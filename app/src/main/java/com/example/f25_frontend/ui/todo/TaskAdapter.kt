@@ -32,12 +32,13 @@ class TaskAdapter(
 
         holder.tvTitle.text = task.title
 
-        holder.cbTask.buttonTintList = android.content.res.ColorStateList.valueOf(task.category.color)
-
+        // ✅ 중요: 이전 리스너 제거 (RecyclerView 재활용 방지)
         holder.cbTask.setOnCheckedChangeListener(null)
 
+        // ✅ 체크 상태 설정
         holder.cbTask.isChecked = task.isDone
 
+        // ✅ 체크 이벤트 리스너 등록
         holder.cbTask.setOnCheckedChangeListener { _, isChecked ->
             task.isDone = isChecked
             onTaskChecked(task)
@@ -47,7 +48,6 @@ class TaskAdapter(
             onTaskDeleted(task)
         }
     }
-
 
     override fun getItemCount(): Int = tasks.size
 }

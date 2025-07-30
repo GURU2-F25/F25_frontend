@@ -1,99 +1,94 @@
-package com.example.f25_frontend.ui.dialog
+package com.example.f25_frontend.ui.todo
 
 import android.app.Dialog
-import android.graphics.Color
+import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.DialogFragment
 import com.example.f25_frontend.R
 import com.example.f25_frontend.model.Category
 import com.example.f25_frontend.model.Task
-import java.io.Serializable
 import java.time.LocalDate
 
-class AddTaskDialog : DialogFragment() {
+class AddTaskDialog(
+    context: Context,
+    private val category: Category,
+    private val date: LocalDate,
+    private val onTaskAdded: () -> Unit
+) : Dialog(context) {
 
-    private var onTaskAdded: ((Task, Boolean, Boolean) -> Unit)? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.dialog_add_task)
 
-    companion object {
-        fun newInstance(category: Category, date: LocalDate): AddTaskDialog {
-            val fragment = AddTaskDialog()
-            val args = Bundle()
-            args.putString("categoryName", category.name)
-            args.putInt("categoryColor", category.color)
-            args.putSerializable("category", category as Serializable)
-            args.putSerializable("date", date)
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
-    fun setOnTaskAddedListener(listener: (Task, Boolean, Boolean) -> Unit) {
-        onTaskAdded = listener
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        return dialog
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
+        // ✅ 다이얼로그 크기 및 배경 설정
+        window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
-    }
+        window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.dialog_add_task, container, false)
-    }
+        // ✅ UI 요소 참조
+        val tvCategoryTitle = findViewById<TextView>(R.id.tvCategoryTitle)
+        val etTaskTitle = findViewById<EditText>(R.id.etTaskTitle)
+        val cbRepeatDaily = findViewById<CheckBox>(R.id.cbRepeatDaily)
+        val cbRepeatWeekly = findViewById<CheckBox>(R.id.cbRepeatFriday)  // 이름이 Weekly여도 id는 Friday
+        val btnAddTaskConfirm = findViewById<Button>(R.id.btnAddTaskConfirm)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val categoryName = arguments?.getString("categoryName") ?: "카테고리"
-        val categoryColor = arguments?.getInt("categoryColor") ?: Color.GRAY
-        val category = arguments?.getSerializable("category") as? Category
-        val date = arguments?.getSerializable("date") as? LocalDate
+        tvCategoryTitle.text = category.name
 
-        val tvCategoryTitle = view.findViewById<TextView>(R.id.tvCategoryTitle)
-        val etTaskTitle = view.findViewById<EditText>(R.id.etTaskTitle)
-        val cbRepeatDaily = view.findViewById<CheckBox>(R.id.cbRepeatDaily)
-        val cbRepeatFriday = view.findViewById<CheckBox>(R.id.cbRepeatFriday)
-        val btnAddTaskConfirm = view.findViewById<Button>(R.id.btnAddTaskConfirm)
-
-        tvCategoryTitle.text = categoryName
-        tvCategoryTitle.setBackgroundColor(categoryColor)
-
+        // ✅ 버튼 클릭 처리
         btnAddTaskConfirm.setOnClickListener {
             val taskTitle = etTaskTitle.text.toString().trim()
-            val repeatDaily = cbRepeatDaily.isChecked
-            val repeatWeekly = cbRepeatFriday.isChecked
 
             if (taskTitle.isEmpty()) {
-                Toast.makeText(requireContext(), "일정명을 입력하세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "일정명을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            if (category == null || date == null) {
-                Toast.makeText(requireContext(), "카테고리 정보가 없습니다", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            val repeatDaily = cbRepeatDaily.isChecked
+            val repeatWeekly = cbRepeatWeekly.isChecked
+
+            when {
+                repeatDaily -> {
+                    val startOfWeek = date.with(java.time.DayOfWeek.MONDAY)
+                    for (i in 0 until 7) {
+                        val day = startOfWeek.plusDays(i.toLong())
+                        val task = Task(
+                            title = taskTitle,
+                            date = day,
+                            category = category,
+                            isDone = false
+                        )
+                        category.tasksByDate.getOrPut(day) { mutableListOf() }.add(task)
+                    }
+                }
+
+                repeatWeekly -> {
+                    for (i in 0 until 4) { // 4주 반복
+                        val weeklyDate = date.plusWeeks(i.toLong())
+                        val task = Task(
+                            title = taskTitle,
+                            date = weeklyDate,
+                            category = category,
+                            isDone = false
+                        )
+                        category.tasksByDate.getOrPut(weeklyDate) { mutableListOf() }.add(task)
+                    }
+                }
+
+                else -> {
+                    val task = Task(
+                        title = taskTitle,
+                        date = date,
+                        category = category,
+                        isDone = false
+                    )
+                    category.tasksByDate.getOrPut(date) { mutableListOf() }.add(task)
+                }
             }
 
-            val task = Task(
-                title = taskTitle,
-                date = date,
-                isDone = false,
-                category = category
-            )
-
-            onTaskAdded?.invoke(task, repeatDaily, repeatWeekly)
+            onTaskAdded()
             dismiss()
         }
     }

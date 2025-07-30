@@ -97,14 +97,12 @@
         <Button
             android:id="@+id/btnSaveCategory"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/bg_button_r12"
+            android:layout_height="48dp"
             android:text="추가하기"
-            android:textColor="@color/white"
+            android:backgroundTint="#333333"
+            android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:layout_marginBottom="20dp" />
+            android:minHeight="48dp" />
 
     </LinearLayout>
 </ScrollView>
