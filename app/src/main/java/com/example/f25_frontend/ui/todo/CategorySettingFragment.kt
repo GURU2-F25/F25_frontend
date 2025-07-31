@@ -17,7 +17,6 @@ import com.example.f25_frontend.model.CategoryDto
 import com.example.f25_frontend.adapter.CategorySettingAdapter
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.RetrofitUtil
-import com.example.f25_frontend.viewmodel.CategoryViewModel
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Callback

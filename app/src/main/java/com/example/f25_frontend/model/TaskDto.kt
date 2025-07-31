@@ -8,5 +8,6 @@ data class TaskDto(
     val title: String,
     val date: LocalDate,      // 날짜별 일정 관리
     var isDone: Boolean = false,
-    var categoryDto: CategoryDto
+    var categoryDto: CategoryDto,
+    val categoryId: String = categoryDto.id
 )

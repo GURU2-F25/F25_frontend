@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.f25_frontend.MyApplication
 import com.example.f25_frontend.R
 import com.example.f25_frontend.adapter.CategoryAdapter
 import com.example.f25_frontend.model.CategoryDto
@@ -18,12 +19,14 @@ import com.example.f25_frontend.model.TaskDto
 import com.example.f25_frontend.adapter.WeekAdapter
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.RetrofitUtil
-import com.example.f25_frontend.viewmodel.CategoryViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.DayOfWeek
 import java.time.LocalDate
+import com.example.f25_frontend.viewmodel.CategoryViewModel
+
+
 /*
     @Author 조수연, 김소연
     @TODO 내 일정 서버 연동 개발 예정
@@ -65,6 +68,8 @@ class TodoFragment : Fragment() {
 
         setupWeekView()
         setupCategoryList()
+
+        fetchCategoriesAndTasks()
 
         categoryViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
             selectedDate = date
@@ -121,6 +126,47 @@ class TodoFragment : Fragment() {
         categoryRecyclerView.adapter = categoryAdapter
     }
 
+    private fun fetchCategoriesAndTasks() {
+        val userId = MyApplication.prefs.getString("id") ?: return
+        val service: RetrofitUtil = ApiClient.getAuthApiClient().create(RetrofitUtil::class.java)
+        service.getCategory(userId)
+            .enqueue(object : Callback<List<CategoryDto>> {
+                override fun onResponse(
+                    call: Call<List<CategoryDto>>,
+                    response: Response<List<CategoryDto>>
+                ) {
+                    val categories = response.body()?.onEach {
+                        it.tasksByDate = mutableMapOf()
+                    }?.toMutableList() ?: mutableListOf()
+
+                    service.getTodo(userId, selectedDate.toString())
+                        .enqueue(object : Callback<List<TaskDto>> {
+                            override fun onResponse(
+                                call: Call<List<TaskDto>>,
+                                response: Response<List<TaskDto>>
+                            ) {
+                                val taskList = response.body() ?: emptyList()
+                                for (task in taskList) {
+                                    val category = categories.find { it.id == task.categoryId }
+                                    if (category != null) {
+                                        val taskDate = task.date
+                                        if (!category.tasksByDate.containsKey(taskDate)) {
+                                            category.tasksByDate[taskDate] = mutableListOf()
+                                        }
+                                        category.tasksByDate[taskDate]?.add(task)
+                                    }
+                                }
+                                categoryViewModel.setCategoriesForSelectedDate(categories)
+                            }
+
+                            override fun onFailure(call: Call<List<TaskDto>>, t: Throwable) {}
+                        })
+                }
+
+                override fun onFailure(call: Call<List<CategoryDto>>, t: Throwable) {}
+            })
+    }
+
     private fun shiftWeek(weeks: Long) {
         currentWeekStart = currentWeekStart.plusWeeks(weeks)
         setupWeekView()
@@ -145,9 +191,8 @@ class TodoFragment : Fragment() {
     private fun updateCategoryProgress(categories: List<CategoryDto>) {
         categoryProgressContainer.removeAllViews()
 
-        // 전체 목표 달성률 계산
         val totalTasks = categories.sumOf { it.tasksByDate[selectedDate]?.size ?: 0 }
-        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it -> it.isDone } ?: 0 }
+        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it.isDone } ?: 0 }
 
         if (totalTasks > 0) {
             val percent = (doneTasks * 100) / totalTasks
@@ -176,7 +221,7 @@ class TodoFragment : Fragment() {
             tvName.setTextColor(category.color)
 
             progressBar.progress = percent
-            progressBar.progressTintList = ColorStateList.valueOf(category.color) // ✅ 색상 적용
+            progressBar.progressTintList = ColorStateList.valueOf(category.color)
             tvPercent.text = "$percent%"
             tvPercent.setTextColor(category.color)
 

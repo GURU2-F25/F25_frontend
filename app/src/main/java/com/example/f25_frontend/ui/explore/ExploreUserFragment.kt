@@ -24,12 +24,10 @@ import com.example.f25_frontend.databinding.FragmentExploreUserBinding
 import com.example.f25_frontend.model.CategoryDto
 import com.example.f25_frontend.model.UserDto
 import com.example.f25_frontend.adapter.WeekAdapter
-import com.example.f25_frontend.adapter.CategoryAdapter
 import com.example.f25_frontend.adapter.ExploreUserCategoryAdapter
 import com.example.f25_frontend.model.TaskDto
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.RetrofitUtil
-import com.example.f25_frontend.viewmodel.CategoryViewModel
 import com.example.f25_frontend.viewmodel.ExploreUserViewModel
 import com.google.gson.JsonElement
 import retrofit2.Call
@@ -37,6 +35,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.DayOfWeek
 import java.time.LocalDate
+import com.example.f25_frontend.viewmodel.CategoryViewModel
+
 
 /*
     @Author 조수연
@@ -72,87 +72,74 @@ class ExploreUserFragment : Fragment() {
         _binding = FragmentExploreUserBinding.inflate(inflater, container, false)
         return binding.root
     }
-//    유저 정보 데이터 바인딩 함수
-    fun initUserInfoLayout(user: UserDto){
-        /*백엔드 이미지 업로드 미구현으로 주석 처리
-        binding.imgProfile.setImageURI(Uri.parse(user.profileImage))*/
-        binding.tvUserName.text=user.userName
-        binding.tvUserId.text=user.id
-        binding.tvFollowing.text="팔로잉 "+user.following?.size
-        binding.tvFollower.text="팔로워 "+user.followers?.size
+
+    // 유저 정보 데이터 바인딩 함수
+    fun initUserInfoLayout(user: UserDto) {
+        binding.tvUserName.text = user.userName
+        binding.tvUserId.text = user.id
+        binding.tvFollowing.text = "팔로잉 " + user.following?.size
+        binding.tvFollower.text = "팔로워 " + user.followers?.size
 
         if (user.followers != null) {
-            if(user.followers.isNotEmpty()){
+            if (user.followers.isNotEmpty()) {
                 for (index in user.followers.indices)
                     if (user.followers[index] != MyApplication.prefs.getString("id"))
                         setFollowBtn(user)
                     else if (user.followers[index] == MyApplication.prefs.getString("id"))
                         setUnFollowBtn(user)
-            }
-            else{
+            } else {
                 setFollowBtn(user)
             }
         }
     }
+
     @SuppressLint("SetTextI18n")
-    fun setFollowBtn(user: UserDto){
-        if(user.followers!=null)
-            binding.tvFollower.text="팔로워 "+ user.followers.size.toString()
-        binding.btnFollow.text="팔로우 하기"
-        binding.btnFollow.setOnClickListener{
+    fun setFollowBtn(user: UserDto) {
+        if (user.followers != null)
+            binding.tvFollower.text = "팔로워 " + user.followers.size.toString()
+        binding.btnFollow.text = "팔로우 하기"
+        binding.btnFollow.setOnClickListener {
             actionFollow(user)
         }
     }
+
     @SuppressLint("SetTextI18n")
-    fun setUnFollowBtn(user: UserDto){
-        if(user.followers!=null)
-            binding.tvFollower.text="팔로워 "+ user.followers.size.plus(1).toString()
-        binding.btnFollow.text="팔로잉 중"
-        binding.btnFollow.setOnClickListener{
+    fun setUnFollowBtn(user: UserDto) {
+        if (user.followers != null)
+            binding.tvFollower.text = "팔로워 " + user.followers.size.plus(1).toString()
+        binding.btnFollow.text = "팔로잉 중"
+        binding.btnFollow.setOnClickListener {
             actionUnFollow(user)
         }
     }
+
     private fun actionFollow(user: UserDto) {
         val service: RetrofitUtil = ApiClient.getAuthApiClient().create(RetrofitUtil::class.java)
         service.follow(user.id)
             .enqueue(object : Callback<JsonElement> {
-                override fun onResponse(
-                    call: Call<JsonElement>,
-                    response: Response<JsonElement>
-                ) {
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                     if (response.code() == 200) {
-                        /* 백엔드로부터 요청 성공 시 데이터 무결성을 위해 user 정보를 반환 요청하였으나 엔드포인트 수정이 되지 않음*/
                         setUnFollowBtn(user)
-                    } else if (response.code() == 400) {
-                        /* 백엔드로부터 statusCode 및 message 반환 요청하였으나 엔드포인트 수정이 되지 않음*/
-                        Toast.makeText(requireContext(), response.message().toString(), Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(requireContext(), "서버와의 통신에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), response.message().toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
+
                 override fun onFailure(call: Call<JsonElement>, t: Throwable) {
                     Toast.makeText(requireContext(), "서버와의 통신에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                 }
             })
     }
-    private fun actionUnFollow(user:UserDto){
+
+    private fun actionUnFollow(user: UserDto) {
         val service: RetrofitUtil = ApiClient.getAuthApiClient().create(RetrofitUtil::class.java)
         service.unFollow(user.id)
             .enqueue(object : Callback<JsonElement> {
-                override fun onResponse(
-                    call: Call<JsonElement>,
-                    response: Response<JsonElement>
-                ) {
-                    if(response.code()==200){
-                        /* 백엔드로부터 요청 성공 시 데이터 무결성을 위해 user 정보를 반환 요청하였으나 엔드포인트 수정이 되지 않음*/
+                override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
+                    if (response.code() == 200) {
                         setFollowBtn(user)
-                    }
-                    else if(response.code()==400){
-                        /* 백엔드로부터 statusCode 및 message 반환 요청하였으나 엔드포인트 수정이 되지 않음*/
+                    } else {
                         Toast.makeText(requireContext(), response.message().toString(), Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        Toast.makeText(requireContext(), "서버와의 통신에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -164,6 +151,7 @@ class ExploreUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val user: UserDto = arguments?.getSerializable("exploreUser") as UserDto
+
         weekRecyclerView = view.findViewById(R.id.weekRecyclerView)
         tvMonthYear = view.findViewById(R.id.tvMonthYear)
         btnPrevWeek = view.findViewById(R.id.btnPrevWeek)
@@ -181,25 +169,23 @@ class ExploreUserFragment : Fragment() {
         val service: RetrofitUtil = ApiClient.getAuthApiClient().create(RetrofitUtil::class.java)
         service.getCategory(user.id)
             .enqueue(object : Callback<List<CategoryDto>> {
-                override fun onResponse(
-                    call: Call<List<CategoryDto>>,
-                    response: Response<List<CategoryDto>>
-                ) {
+                override fun onResponse(call: Call<List<CategoryDto>>, response: Response<List<CategoryDto>>) {
                     if (response.body() != null) {
                         val respCategoryList: List<CategoryDto> = response.body()!!
-                        /*@FIXME FROM조수연 TO김소연
-                                백엔드 반환값 내 tasksByDate가 비직렬화 과정 중 null 발생하여 초기화 작업 필요. iterator를 통해 임시 조치하였음.*/
-                        val iteratorCategoryList = respCategoryList.iterator()
-                        while (iteratorCategoryList.hasNext()) {
-                            val iterCateNext = iteratorCategoryList.next()
-                            iterCateNext.tasksByDate = mutableMapOf()
-                        }
-                        /*@FIXME FROM조수연 TO김소연
-                            updateCategories 함수 내에서 불러온 카테고리 name값이 변경되지않음. (ExploreUserCategoryAdapter.kt 확인)
-                             또한 백엔드측에서 반환 한 color값이 정상 작동하는 지 확인 후 수정 필요.*/
-                        categoryAdapter.updateCategories(respCategoryList)
-//                      updateCategoryProgress(respCategoryList)
 
+                        /*@FIXME FROM조수연 TO김소연
+                            백엔드 반환값 내 tasksByDate가 비직렬화 과정 중 null 발생하여 초기화 작업 필요. iterator를 통해 임시 조치하였음.*/
+                        for (category in respCategoryList) {
+                            if (category.tasksByDate == null)
+                                category.tasksByDate = mutableMapOf()
+                        }
+
+                        /*@FIXME FROM조수연 TO김소연
+                            updateCategories 함수 내에서 불러온 카테고리 name값이 변경되지 않음.
+                            (ExploreUserCategoryAdapter.kt 확인)
+                            또한 백엔드측에서 반환 한 color값이 정상 작동하는 지 확인 후 수정 필요.*/
+
+                        // 일정 불러오기
                         service.getTodo(user.id, selectedDate.toString())
                             .enqueue(object : Callback<List<TaskDto>> {
                                 override fun onResponse(
@@ -207,29 +193,38 @@ class ExploreUserFragment : Fragment() {
                                     response: Response<List<TaskDto>>
                                 ) {
                                     if (response.body() != null) {
-                                        val respTaskList: List<TaskDto> = response.body()!!
-                                        val iteratorTaskList = respTaskList.iterator()
-                                        while (iteratorTaskList.hasNext()) {
-                                            var iterTaskNext = iteratorTaskList.next()
-                                            /*@FIXME FROM조수연 TO김소연
-                                                respTaskList: List<TaskDto>에서 카테고리별로 dataList를 분리한 후
-                                                respTaskList: List<CategoryDto> 내부 CategoryDto들과 매칭되는 dataList를 tasksByDate에 SET해주세요.
-                                                TODOFragment쪽도 동일하게 적용되어 해당 부분 해결 되어야 완성이 가능합니다.
-                                             */
+                                        val taskList: List<TaskDto> = response.body()!!
+
+                                        /*@FIXME FROM조수연 TO김소연
+                                            respTaskList: List<TaskDto>에서 카테고리별로 dataList를 분리한 후
+                                            respTaskList: List<CategoryDto> 내부 CategoryDto들과 매칭되는 dataList를 tasksByDate에 SET해주세요.
+                                            TODOFragment쪽도 동일하게 적용되어 해당 부분 해결 되어야 완성이 가능합니다.
+                                        */
+                                        for (task in taskList) {
+                                            val category = respCategoryList.find { it.id == task.categoryId }
+                                            if (category != null) {
+                                                val taskDate = task.date
+                                                if (!category.tasksByDate.containsKey(taskDate)) {
+                                                    category.tasksByDate[taskDate] = mutableListOf()
+                                                }
+                                                category.tasksByDate[taskDate]?.add(task)
+                                            }
                                         }
+
+                                        categoryAdapter.updateCategories(respCategoryList)
+                                        updateCategoryProgress(respCategoryList)
                                     }
                                 }
-                                override fun onFailure(
-                                    call: Call<List<TaskDto>>,
-                                    t: Throwable
-                                ) {
-                                    TODO("Not yet implemented")
+
+                                override fun onFailure(call: Call<List<TaskDto>>, t: Throwable) {
+                                    // TODO("Not yet implemented")
                                 }
-                        })
+                            })
                     }
                 }
+
                 override fun onFailure(call: Call<List<CategoryDto>>, t: Throwable) {
-//                    TODO("Not yet implemented")
+                    // TODO("Not yet implemented")
                 }
             })
 
@@ -237,9 +232,7 @@ class ExploreUserFragment : Fragment() {
             selectedDate = date
             weekAdapter.updateSelectedDate(date)
             categoryAdapter.updateSelectedDate(date)
-
             Log.d("SELECTEDDATE ::: ", date.toString())
-
         }
 
         categoryViewModel.categoriesForSelectedDate.observe(viewLifecycleOwner) { categories ->
@@ -286,15 +279,16 @@ class ExploreUserFragment : Fragment() {
         categoryViewModel.updateSelectedDate(currentWeekStart)
     }
 
-    private fun refreshTaskListForDate(date: LocalDate) {}
+    private fun refreshTaskListForDate(date: LocalDate) {
+        // 선택한 날짜에 따른 작업 새로고침 (필요시 구현)
+    }
 
     @SuppressLint("SetTextI18n")
     private fun updateCategoryProgress(categories: List<CategoryDto>) {
         categoryProgressContainer.removeAllViews()
 
-        // 전체 목표 달성률 계산
         val totalTasks = categories.sumOf { it.tasksByDate[selectedDate]?.size ?: 0 }
-        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it -> it.isDone } ?: 0 }
+        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it.isDone } ?: 0 }
 
         if (totalTasks > 0) {
             val percent = (doneTasks * 100) / totalTasks
@@ -323,17 +317,16 @@ class ExploreUserFragment : Fragment() {
             tvName.setTextColor(category.color)
 
             progressBar.progress = percent
-            progressBar.progressTintList = ColorStateList.valueOf(category.color) // ✅ 색상 적용
+            progressBar.progressTintList = ColorStateList.valueOf(category.color)
             tvPercent.text = "$percent%"
             tvPercent.setTextColor(category.color)
 
             categoryProgressContainer.addView(progressLayout)
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

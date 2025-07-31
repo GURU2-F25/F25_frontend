@@ -10,7 +10,6 @@ import com.example.f25_frontend.model.TaskDto
 import java.time.LocalDate
 /*
     @Author 김소연
-
 */
 class CategoryViewModel : ViewModel() {
 
@@ -32,7 +31,6 @@ class CategoryViewModel : ViewModel() {
 
     init {
         val today = _selectedDate.value ?: LocalDate.now()
-//        Log.d("color data?:::",defaultCategories.toString())
         categoryDtoMap[today] = defaultCategories.map { it.copy() }.toMutableList()
         _categoriesForSelectedDate.value = categoryDtoMap[today]
     }
@@ -45,7 +43,6 @@ class CategoryViewModel : ViewModel() {
         _categoriesForSelectedDate.value = categoryDtoMap[date]
     }
 
-    // ✅ 내부 selectedDate 기준 추가 함수
     fun addCategory(categoryDto: CategoryDto) {
         val date = _selectedDate.value ?: return
         addCategory(date, categoryDto)
@@ -61,7 +58,6 @@ class CategoryViewModel : ViewModel() {
         deleteCategory(date, categoryDto)
     }
 
-    // ✅ 날짜 지정 가능한 오버로드 함수들
     fun addCategory(date: LocalDate, categoryDto: CategoryDto) {
         val list = categoryDtoMap.getOrPut(date) { defaultCategories.map { it.copy() }.toMutableList() }
         list.add(categoryDto)
@@ -101,5 +97,17 @@ class CategoryViewModel : ViewModel() {
         if (_selectedDate.value == date) {
             _categoriesForSelectedDate.value = list.toList()
         }
+    }
+
+    fun setCategoriesForSelectedDate(date: LocalDate, categories: List<CategoryDto>) {
+        categoryDtoMap[date] = categories.toMutableList()
+        if (_selectedDate.value == date) {
+            _categoriesForSelectedDate.value = categories
+        }
+    }
+
+    fun setCategoriesForSelectedDate(categories: List<CategoryDto>) {
+        val date = _selectedDate.value ?: return
+        setCategoriesForSelectedDate(date, categories)
     }
 }
