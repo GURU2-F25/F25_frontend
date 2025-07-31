@@ -11,9 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.f25_frontend.MyApplication
 import com.example.f25_frontend.R
 import com.example.f25_frontend.databinding.FragmentLoginBinding
+import com.example.f25_frontend.model.LoginRequest
 import com.example.f25_frontend.model.UserDto
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.RetrofitUtil
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,10 +39,20 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val id = binding.editTextId.text.toString().trim()
             val pw = binding.editTextPassword.text.toString().trim()
-            if (id.isNotEmpty() && pw.isNotEmpty())
-                login(id, pw)
-            else
-                Toast.makeText(requireContext(),"아이디, 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show()
+            if (id.isNotEmpty() && pw.isNotEmpty()) {
+                FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val deviceToken = task.result
+                        login(id, pw, deviceToken)
+                    } else {
+                        Toast.makeText(requireContext(), "FCM 토큰을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        login(id, pw, "")
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "아이디, 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         // 회원가입으로 이동
@@ -50,12 +62,11 @@ class LoginFragment : Fragment() {
 
         return binding.root
     }
-    private fun login(userId: String, password: String) {
+    private fun login(userId: String, password: String, deviceToken: String) {
 //        findNavController().navigate(R.id.action_login_to_todo)
 
         val service: RetrofitUtil = ApiClient.getNoAuthApiClient().create(RetrofitUtil::class.java)
-        val newUser = UserDto(id = userId, password = password, "","","","","", emptyList(),
-            emptyList(), "")
+        val newUser = LoginRequest(id = userId, password = password, deviceToken=deviceToken)
         Log.d("userData", Gson().toJson(newUser))
         service.login(newUser)
             .enqueue(object : Callback<UserDto> {

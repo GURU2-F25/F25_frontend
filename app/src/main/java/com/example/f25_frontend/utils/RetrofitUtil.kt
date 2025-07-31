@@ -1,6 +1,7 @@
 package com.example.f25_frontend.utils
 
 import com.example.f25_frontend.model.CategoryDto
+import com.example.f25_frontend.model.LoginRequest
 import com.example.f25_frontend.model.TaskDto
 import com.example.f25_frontend.model.UserDto
 import com.google.gson.JsonElement
@@ -31,7 +32,7 @@ interface RetrofitUtil {
 //    로그인
     @POST("/api/auth/login")
     fun login(
-        @Body userDto:UserDto
+        @Body loginRequest: LoginRequest
     ): Call<UserDto>
 
 //    유저 조회
