@@ -4,9 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 //    Using FIREBASE
     id("com.google.gms.google-services")
-//    네비게이션 데이터 통신
-//    id("androidx.navigation.safeargs")
-    id ("kotlin-parcelize")
+
+    kotlin("plugin.serialization") version "2.0.0"
 }
 android {
     namespace = "com.example.f25_frontend"
@@ -50,11 +49,10 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
     // Firebase Cloud Messaging
     implementation("com.google.firebase:firebase-messaging")
-
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-
     // Add the dependency for the Firebase SDK for Google Analytics
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json")
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")

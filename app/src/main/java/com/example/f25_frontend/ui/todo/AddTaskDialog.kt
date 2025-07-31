@@ -6,13 +6,15 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.*
 import com.example.f25_frontend.R
-import com.example.f25_frontend.model.Category
-import com.example.f25_frontend.model.Task
+import com.example.f25_frontend.model.CategoryDto
+import com.example.f25_frontend.model.TaskDto
 import java.time.LocalDate
-
+/*
+    @Author 김소연
+*/
 class AddTaskDialog(
     context: Context,
-    private val category: Category,
+    private val categoryDto: CategoryDto,
     private val date: LocalDate,
     private val onTaskAdded: () -> Unit
 ) : Dialog(context) {
@@ -35,7 +37,7 @@ class AddTaskDialog(
         val cbRepeatWeekly = findViewById<CheckBox>(R.id.cbRepeatFriday)  // 이름이 Weekly여도 id는 Friday
         val btnAddTaskConfirm = findViewById<Button>(R.id.btnAddTaskConfirm)
 
-        tvCategoryTitle.text = category.name
+        tvCategoryTitle.text = categoryDto.name
 
         // ✅ 버튼 클릭 처리
         btnAddTaskConfirm.setOnClickListener {
@@ -54,37 +56,37 @@ class AddTaskDialog(
                     val startOfWeek = date.with(java.time.DayOfWeek.MONDAY)
                     for (i in 0 until 7) {
                         val day = startOfWeek.plusDays(i.toLong())
-                        val task = Task(
+                        val taskDto = TaskDto(
                             title = taskTitle,
                             date = day,
-                            category = category,
+                            categoryDto = categoryDto,
                             isDone = false
                         )
-                        category.tasksByDate.getOrPut(day) { mutableListOf() }.add(task)
+                        categoryDto.tasksByDate.getOrPut(day) { mutableListOf() }.add(taskDto)
                     }
                 }
 
                 repeatWeekly -> {
                     for (i in 0 until 4) { // 4주 반복
                         val weeklyDate = date.plusWeeks(i.toLong())
-                        val task = Task(
+                        val taskDto = TaskDto(
                             title = taskTitle,
                             date = weeklyDate,
-                            category = category,
+                            categoryDto = categoryDto,
                             isDone = false
                         )
-                        category.tasksByDate.getOrPut(weeklyDate) { mutableListOf() }.add(task)
+                        categoryDto.tasksByDate.getOrPut(weeklyDate) { mutableListOf() }.add(taskDto)
                     }
                 }
 
                 else -> {
-                    val task = Task(
+                    val taskDto = TaskDto(
                         title = taskTitle,
                         date = date,
-                        category = category,
+                        categoryDto = categoryDto,
                         isDone = false
                     )
-                    category.tasksByDate.getOrPut(date) { mutableListOf() }.add(task)
+                    categoryDto.tasksByDate.getOrPut(date) { mutableListOf() }.add(taskDto)
                 }
             }
 

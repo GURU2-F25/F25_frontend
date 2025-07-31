@@ -1,4 +1,4 @@
-package com.example.f25_frontend.ui.todo
+package com.example.f25_frontend.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +8,15 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.f25_frontend.R
-import com.example.f25_frontend.model.Task
-
+import com.example.f25_frontend.model.TaskDto
+/*
+    @Author 김소연
+    일정 데이터 바인딩 어댑터
+*/
 class TaskAdapter(
-    private val tasks: List<Task>,
-    private val onTaskChecked: (Task) -> Unit,
-    private val onTaskDeleted: (Task) -> Unit
+    private val taskDtos: List<TaskDto>,
+    private val onTaskChecked: (TaskDto) -> Unit,
+    private val onTaskDeleted: (TaskDto) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,7 +31,7 @@ class TaskAdapter(
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task = tasks[position]
+        val task = taskDtos[position]
 
         holder.tvTitle.text = task.title
 
@@ -49,5 +52,5 @@ class TaskAdapter(
         }
     }
 
-    override fun getItemCount(): Int = tasks.size
+    override fun getItemCount(): Int = taskDtos.size
 }

@@ -13,12 +13,15 @@ import com.example.f25_frontend.R
 import com.example.f25_frontend.databinding.FragmentLoginBinding
 import com.example.f25_frontend.model.UserDto
 import com.example.f25_frontend.utils.ApiClient
-import com.example.f25_frontend.utils.retrofitUtil
+import com.example.f25_frontend.utils.RetrofitUtil
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
+/*
+    @Author 조수연
+    로그인 기능 - 화면
+*/
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
@@ -34,12 +37,10 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val id = binding.editTextId.text.toString().trim()
             val pw = binding.editTextPassword.text.toString().trim()
-
-            login(id, pw)
-
-            if (id.isNotEmpty() && pw.isNotEmpty()) {
-//                login실행
-            }
+            if (id.isNotEmpty() && pw.isNotEmpty())
+                login(id, pw)
+            else
+                Toast.makeText(requireContext(),"아이디, 비밀번호를 입력해주세요.",Toast.LENGTH_SHORT).show()
         }
 
         // 회원가입으로 이동
@@ -52,8 +53,9 @@ class LoginFragment : Fragment() {
     private fun login(userId: String, password: String) {
 //        findNavController().navigate(R.id.action_login_to_todo)
 
-        val service: retrofitUtil = ApiClient.getNoAuthApiClient().create(retrofitUtil::class.java)
-        val newUser = UserDto(id = "ljylsh1", password = "3969", "","","","","")
+        val service: RetrofitUtil = ApiClient.getNoAuthApiClient().create(RetrofitUtil::class.java)
+        val newUser = UserDto(id = userId, password = password, "","","","","", emptyList(),
+            emptyList(), "")
         Log.d("userData", Gson().toJson(newUser))
         service.login(newUser)
             .enqueue(object : Callback<UserDto> {

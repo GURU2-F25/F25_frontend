@@ -21,7 +21,10 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.f25_frontend.databinding.ActivityMainBinding
-
+/*
+    @Author 조수연
+    앱 기본 설정, 권한 허가, Fragment 연동용 Navigation 설정, FCM PUSH module 생성
+*/
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration : AppBarConfiguration
     private val requestPermissionLauncher = registerForActivityResult(
@@ -39,14 +42,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun askNotificationPermission() {
-        // This is only necessary for API Level > 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
-                // FCM SDK (and your app) can post notifications.
             } else {
-                // Directly ask for the permission
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
@@ -63,64 +63,50 @@ class MainActivity : AppCompatActivity() {
         binding.btnNotify.setOnClickListener{
             navigationController.navigate(R.id.notifyFragment)
         }
-//        scope에 로그인값이 없을 경우
-        if(MyApplication.prefs.getString("id") != null){
+//        @TODO login여부에 따라 상/하단 고정바 노출 여부 수정 필요 -> 현재 prefs로 연결되어 내부DB 사용 중 -> bundle OR 앱 라이프사이클에 따라 prefs 초기화 필요
+        if(MyApplication.prefs.getString("id") != ""){
             binding.navBarTop.visibility= View.VISIBLE
             binding.navBarBottom.visibility= View.VISIBLE
         }
 
         askNotificationPermission()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create channel to show notifications.
-            val channelId = getString(R.string.default_notification_channel_id)
-            val channelName = getString(R.string.default_notification_channel_name)
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager?.createNotificationChannel(
-                NotificationChannel(
-                    channelId,
-                    channelName,
-                    NotificationManager.IMPORTANCE_LOW,
-                ),
-            )
-        }
+        // FCM PUSH 메세지 전송을 위한 채널 생성
+        val channelId = getString(R.string.default_notification_channel_id)
+        val channelName = getString(R.string.default_notification_channel_name)
+        val notificationManager = getSystemService(NotificationManager::class.java)
+        notificationManager?.createNotificationChannel(
+            NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_LOW,
+            ),
+        )
 
-        // If a notification message is tapped, any data accompanying the notification
-        // message is available in the intent extras. In this sample the launcher
-        // intent is fired when the notification is tapped, so any accompanying data would
-        // be handled here. If you want a different intent fired, set the click_action
-        // field of the notification message to the desired intent. The launcher intent
-        // is used when no click_action is specified.
-        //
-        // Handle possible data accompanying notification message.
-        // [START handle_data_extras]
+//        FCM PUSH 메세지 내 데이터 포함 시 intent scope에 저장
         intent.extras?.let {
             for (key in it.keySet()) {
                 val value = intent.extras?.getString(key)
                 Log.d(TAG, "Key: $key Value: $value")
             }
         }
-//         [END handle_data_extras]
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host) as NavHostFragment? ?: return
-
-        // Set up Action Bar
         val navController = host.navController
 
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
         val navInflater = navController.navInflater
-        val graph = navInflater.inflate(R.navigation.nav_graph)
+        navInflater.inflate(R.navigation.nav_graph)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val dest: String = try {
                 resources.getResourceName(destination.id)
             } catch (e: Resources.NotFoundException) {
-                Integer.toString(destination.id)
+                destination.id.toString()
             }
-
-            Toast.makeText(this@MainActivity, "Navigated to $dest",
-                Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this@MainActivity, "Navigated to $dest",
+//                Toast.LENGTH_SHORT).show()
             Log.d("NavigationActivity", "Navigated to $dest")
         }
     }

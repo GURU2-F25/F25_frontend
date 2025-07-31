@@ -17,65 +17,45 @@ import com.example.f25_frontend.MainActivity
 import com.example.f25_frontend.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-
+/*
+    @Author 조수연
+    Firebase Cloud Messaging 라이브러리 유틸리티
+    일정/팔로우 FCM PUSH 알림 기능
+    @TODO 알림페이지 리다이렉션 데이터 연동 예정
+*/
 class FirebaseMsgUtil : FirebaseMessagingService() {
 
-    // [START receive_message]
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: ${remoteMessage.from}")
-
-        // Check if message contains a data payload.
+//        @TODO PUSH 알림 내 서버 데이터 파싱 후 페이지 리다이렉션 구현 예정
         if (remoteMessage.data.isNotEmpty()) {
-            Log.d(TAG, "Message data payload: ${remoteMessage.data}")
-
-            // Check if data needs to be processed by long running job
+            Log.d(TAG, "메세지 데이터 확인: ${remoteMessage.data}")
+//            대규모 프로세싱 시 스케쥴러 사용
             if (needsToBeScheduled()) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
                 scheduleJob()
             } else {
-                // Handle message within 10 seconds
+//            10초 이내 프로세스용
                 handleNow()
             }
         }
-
-        // Check if message contains a notification payload.
         remoteMessage.notification?.let {
-            Log.d(TAG, "Message Notification Body: ${it.body}")
+            Log.d(TAG, "메세지 알림 내용: ${it.body}")
         }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+        /* sendNotification DOCS 참조하여 FCM 사용 시 반드시 initial 해줄 것*/
     }
-    // [END receive_message]
 
     private fun needsToBeScheduled() = true
-
-    // [START on_new_token]
-    /**
-     * Called if the FCM registration token is updated. This may occur if the security of
-     * the previous token had been compromised. Note that this is called when the
-     * FCM registration token is initially generated so this is where you would retrieve the token.
-     */
+//    FCM 토큰 갱신 시 서버측에 토큰 업데이트
     override fun onNewToken(token: String) {
-        Log.d(TAG, "Refreshed token: $token")
-
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // FCM registration token to your app server.
+        Log.d(TAG, "토큰 갱신: $token")
         sendRegistrationToServer(token)
     }
-    // [END on_new_token]
 
     private fun scheduleJob() {
-        // [START dispatch_job]
         val work = OneTimeWorkRequest.Builder(MyWorker::class.java)
             .build()
         WorkManager.getInstance(this)
             .beginWith(work)
             .enqueue()
-        // [END dispatch_job]
     }
 
     private fun handleNow() {
@@ -84,7 +64,7 @@ class FirebaseMsgUtil : FirebaseMessagingService() {
 
     private fun sendRegistrationToServer(token: String?) {
         // TODO: Implement this method to send token to your app server.
-        Log.d(TAG, "sendRegistrationTokenToServer($token)")
+        Log.d(TAG, "서버 전송 토큰($token)")
     }
 
     private fun sendNotification(messageBody: String) {

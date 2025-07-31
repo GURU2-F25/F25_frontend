@@ -1,4 +1,4 @@
-package com.example.f25_frontend.ui.adapter
+package com.example.f25_frontend.adapter
 
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -10,7 +10,10 @@ import com.example.f25_frontend.R
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
-
+/*
+    @Author 김소연, 조수연
+    날짜 데이터 바인딩 어댑터
+*/
 class WeekAdapter(
     private var days: List<LocalDate>,
     private val totalWidth: Int,

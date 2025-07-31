@@ -2,8 +2,10 @@ package com.example.f25_frontend.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-
-//안드로이드 데이터저장소 라이브러리 설정
+/*
+    @Author 조수연
+    안드로이드 SharedPreferences 내부 데이터베이스 유틸리티 구현
+*/
 class DataStoreUtil(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)

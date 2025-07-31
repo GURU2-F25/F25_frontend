@@ -1,6 +1,5 @@
-package com.example.f25_frontend.ui.todo
+package com.example.f25_frontend.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,16 +7,19 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.f25_frontend.R
-import com.example.f25_frontend.model.Category
-import com.example.f25_frontend.model.Task
+import com.example.f25_frontend.model.CategoryDto
+import com.example.f25_frontend.model.TaskDto
 import java.time.LocalDate
-
+/*
+    @Author 김소연, 조수연
+    일정 카테고리 데이터 바인딩 어댑터
+*/
 class CategoryAdapter(
-    private var categories: List<Category>,
+    private var categories: List<CategoryDto>,
     private var selectedDate: LocalDate,
-    private val onAddTaskClick: (Category) -> Unit,
-    private val onTaskChecked: (Task) -> Unit,
-    private val onTaskDeleted: (Task) -> Unit
+    private val onAddTaskClick: (CategoryDto) -> Unit,
+    private val onTaskChecked: (TaskDto) -> Unit,
+    private val onTaskDeleted: (TaskDto) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -42,7 +44,7 @@ class CategoryAdapter(
 
         // TaskAdapter 세팅
         val taskAdapter = TaskAdapter(
-            tasks = tasks,
+            taskDtos = tasks,
             onTaskChecked = { task ->
                 task.isDone = !task.isDone
                 onTaskChecked(task)
@@ -57,6 +59,7 @@ class CategoryAdapter(
         holder.taskRecyclerView.adapter = taskAdapter
 
         // "+" 텍스트 눌러서 할 일 추가
+        holder.tvAddTask.visibility=View.VISIBLE
         holder.tvAddTask.setOnClickListener {
             onAddTaskClick(category)
         }
@@ -64,7 +67,7 @@ class CategoryAdapter(
 
     override fun getItemCount(): Int = categories.size
 
-    fun updateCategories(newCategories: List<Category>) {
+    fun updateCategories(newCategories: List<CategoryDto>) {
         this.categories = newCategories
         notifyDataSetChanged()
     }

@@ -1,5 +1,6 @@
 package com.example.f25_frontend.ui.todo
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,18 +12,22 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.f25_frontend.R
-import com.example.f25_frontend.model.Category
-import com.example.f25_frontend.model.Task
-import com.example.f25_frontend.ui.adapter.WeekAdapter
+import com.example.f25_frontend.adapter.CategoryAdapter
+import com.example.f25_frontend.model.CategoryDto
+import com.example.f25_frontend.model.TaskDto
+import com.example.f25_frontend.adapter.WeekAdapter
 import com.example.f25_frontend.utils.ApiClient
-import com.example.f25_frontend.utils.retrofitUtil
+import com.example.f25_frontend.utils.RetrofitUtil
 import com.example.f25_frontend.viewmodel.CategoryViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.DayOfWeek
 import java.time.LocalDate
-
+/*
+    @Author 조수연, 김소연
+    @TODO 내 일정 서버 연동 개발 예정
+*/
 class TodoFragment : Fragment() {
 
     private lateinit var weekRecyclerView: RecyclerView
@@ -45,27 +50,6 @@ class TodoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        hardcoded test
-        val service: retrofitUtil = ApiClient.getNoAuthApiClient().create(retrofitUtil::class.java)
-        service.getTasks("20250730")
-            .enqueue(object: Callback<List<Task>> {
-                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-                    service.getCategories("20250730")
-                        .enqueue(object: Callback<List<Category>> {
-                            override fun onResponse(call: Call<List<Category>>, response: Response<List<Category>>) {
-//                             FIND LAYOUT & ADD ITEM NEEDS
-//                             FIND LAYOUT & ADD ITEM NEEDS
-//                             FIND LAYOUT & ADD ITEM NEEDS
-                            }
-                            override fun onFailure(call: Call<List<Category>>, t: Throwable) {
-
-                            }
-                        })
-                }
-                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-
-                }
-            })
         return inflater.inflate(R.layout.fragment_todo, container, false)
     }
 
@@ -100,6 +84,7 @@ class TodoFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupWeekView() {
         val weekList = (0 until 7).map { currentWeekStart.plusDays(it.toLong()) }
         tvMonthYear.text = "${currentWeekStart.year}년 ${currentWeekStart.monthValue}월"
@@ -142,10 +127,10 @@ class TodoFragment : Fragment() {
         categoryViewModel.updateSelectedDate(currentWeekStart)
     }
 
-    private fun showAddTaskDialog(category: Category) {
+    private fun showAddTaskDialog(categoryDto: CategoryDto) {
         val dialog = AddTaskDialog(
             context = requireContext(),
-            category = category,
+            categoryDto = categoryDto,
             date = selectedDate,
             onTaskAdded = {
                 categoryViewModel.updateSelectedDate(selectedDate)
@@ -156,12 +141,13 @@ class TodoFragment : Fragment() {
 
     private fun refreshTaskListForDate(date: LocalDate) {}
 
-    private fun updateCategoryProgress(categories: List<Category>) {
+    @SuppressLint("SetTextI18n")
+    private fun updateCategoryProgress(categories: List<CategoryDto>) {
         categoryProgressContainer.removeAllViews()
 
         // 전체 목표 달성률 계산
         val totalTasks = categories.sumOf { it.tasksByDate[selectedDate]?.size ?: 0 }
-        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it.isDone } ?: 0 }
+        val doneTasks = categories.sumOf { it.tasksByDate[selectedDate]?.count { it -> it.isDone } ?: 0 }
 
         if (totalTasks > 0) {
             val percent = (doneTasks * 100) / totalTasks

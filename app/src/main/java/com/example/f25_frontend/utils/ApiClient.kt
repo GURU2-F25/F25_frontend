@@ -8,7 +8,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
-
+/*
+    @Author 조수연
+    서버 통신을 위한 RETROFIT2 라이브러리 유틸리티
+    Bearer 보안 헤더, 디버깅 모듈 인터셉터
+*/
 object ApiClient {
     private val REAL_SERVER_URL:String = "https://f25-backend.onrender.com/"
 //    private val DEV_SERVER_URL:String = "https://10.0.0.2:8000/"

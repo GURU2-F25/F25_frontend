@@ -35,11 +35,12 @@
 
     <!-- 사용자 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvExplore"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingHorizontal="8dp"
         android:clipToPadding="false"
-        tools:listitem="@layout/item_user" />
+        tools:listitem="@layout/item_user"/>
 
 </LinearLayout>

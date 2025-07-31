@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/todoFragment">
+    app:startDestination="@id/loginFragment">
 
     <!-- 푸시알림 페이지 -->
     <fragment
@@ -50,7 +50,7 @@
     <!-- 프로필 설정 화면 -->
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.f25_frontend.ui.profile.ProfileFragment"
+        android:name="com.example.f25_frontend.ui.login.ProfileFragment"
         android:label="프로필 설정"
         tools:layout="@layout/fragment_profile">
         <action
@@ -93,18 +93,7 @@
         android:label="ExploreFragment"
         tools:layout="@layout/fragment_explore">
         <action
-            android:id="@+id/action_explore_to_explore_list"
-            app:destination="@id/exploreListFragment" />
-    </fragment>
-
-    <!-- 탐색 목록 화면 -->
-    <fragment
-        android:id="@+id/exploreListFragment"
-        android:name="com.example.f25_frontend.ui.explore.ExploreListFragment"
-        android:label="탐색 유저 리스트 화면"
-        tools:layout="@layout/fragment_explore_list">
-        <action
-            android:id="@+id/action_explore_list_to_explore_user"
+            android:id="@+id/action_explore_to_explore_user"
             app:destination="@id/exploreUserFragment" />
     </fragment>
 
@@ -115,8 +104,8 @@
         android:label="탐색 유저 선택 페이지 화면"
         tools:layout="@layout/fragment_explore_user">
         <action
-            android:id="@+id/action_explore_user_to_explore_list"
-            app:destination="@id/exploreListFragment" />
+            android:id="@+id/action_explore_user_to_explore"
+            app:destination="@id/exploreFragment" />
     </fragment>
 
     <!-- 마이페이지 화면 -->

@@ -1,17 +1,112 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
+    <!-- 알림 아이템 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="16dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_notification_item"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
+        <!-- 알림 내용 텍스트 -->
+        <TextView
+            android:id="@+id/tvNotification0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[운동] [필라테스 상담 방문] 오늘 일정이 종료됩니다!"
+            android:textColor="#222222"
+            android:textSize="15sp" />
     </LinearLayout>
-</layout>
+
+    <!-- 알림 아이템 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_notification_item"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- 알림 내용 텍스트 -->
+        <TextView
+            android:id="@+id/tvNotification1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="갓생살자님이 나를 팔로우하였습니다."
+            android:textColor="#222222"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 알림 아이템 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_notification_item"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- 알림 내용 텍스트 -->
+        <TextView
+            android:id="@+id/tvNotification2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="[전공] [인공지능의 이해 - 팀플] 완료까지 하루 남았어요!"
+            android:textColor="#222222"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 알림 아이템 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_notification_item"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- 알림 내용 텍스트 -->
+        <TextView
+            android:id="@+id/tvNotification3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="초록색으로빛나는민트8134님이 나를 팔로우하였습니다."
+            android:textColor="#222222"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 알림 아이템 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/bg_notification_item"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- 알림 내용 텍스트 -->
+        <TextView
+            android:id="@+id/tvNotification4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="황금강아지동상님이 나를 팔로우하였습니다."
+            android:textColor="#222222"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

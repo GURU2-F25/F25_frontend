@@ -20,10 +20,10 @@
 
         <ImageButton
             android:id="@+id/btnPopBackStack"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:paddingStart="20dp"
             android:contentDescription="@string/back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,10 +32,10 @@
 
         <ImageButton
             android:id="@+id/btnNotify"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:paddingEnd="20dp"
             android:contentDescription="@string/notification_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +62,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bar_bottom"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:itemBackground="@color/white"
         app:itemIconTint="@drawable/menu_selector"

@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.f25_frontend.databinding.FragmentNotifyBinding
-
+/*
+    @Author 조수연
+    @TODO 알림페이지 조회, 해당 알림 화면 리다이렉션 기능 구현 예정
+*/
 class NotifyFragment : Fragment() {
 
     private var _binding: FragmentNotifyBinding? = null
