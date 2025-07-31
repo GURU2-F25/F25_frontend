@@ -21,6 +21,10 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.f25_frontend.databinding.ActivityMainBinding
+import com.example.f25_frontend.utils.FirebaseMsgUtil
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+
 /*
     @Author 조수연
     앱 기본 설정, 권한 허가, Fragment 연동용 Navigation 설정, FCM PUSH module 생성
@@ -67,9 +71,15 @@ class MainActivity : AppCompatActivity() {
         if(MyApplication.prefs.getString("id") != ""){
             binding.navBarTop.visibility= View.VISIBLE
             binding.navBarBottom.visibility= View.VISIBLE
+        } else{
+            binding.navBarTop.visibility= View.INVISIBLE
+            binding.navBarBottom.visibility= View.INVISIBLE
         }
 
         askNotificationPermission()
+
+        getTokenValue()
+
         // FCM PUSH 메세지 전송을 위한 채널 생성
         val channelId = getString(R.string.default_notification_channel_id)
         val channelName = getString(R.string.default_notification_channel_name)
@@ -105,10 +115,23 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Resources.NotFoundException) {
                 destination.id.toString()
             }
-//            Toast.makeText(this@MainActivity, "Navigated to $dest",
-//                Toast.LENGTH_SHORT).show()
             Log.d("NavigationActivity", "Navigated to $dest")
         }
+    }
+    fun getTokenValue(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("FCM TOKEN :::", msg)
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
