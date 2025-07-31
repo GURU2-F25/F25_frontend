@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnNotify.setOnClickListener{
             navigationController.navigate(R.id.notifyFragment)
         }
-//        @TODO login여부에 따라 상/하단 고정바 노출 여부 수정 필요 -> 현재 prefs로 연결되어 내부DB 사용 중 -> bundle OR 앱 라이프사이클에 따라 prefs 초기화 필요
+
         if(MyApplication.prefs.getString("id") != ""){
             binding.navBarTop.visibility= View.VISIBLE
             binding.navBarBottom.visibility= View.VISIBLE

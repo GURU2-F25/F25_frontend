@@ -1,5 +1,6 @@
 package com.example.f25_frontend.adapter
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -42,10 +43,12 @@ class ExploreUserCategoryAdapter(
 //        @FIXME FROM조수연 TO김소연 카테고리 업데이트 과정 확인 필요 (로그 참조)
         Log.d("onBindViewHolder 내 category name값 :: ", category.name)
         // 할 일 목록
+
         val tasks = category.tasksByDate[selectedDate] ?: emptyList()
 
         // TaskAdapter 세팅
         val taskAdapter = TaskAdapter(
+            visible = View.INVISIBLE,
             taskDtos = tasks,
             onTaskChecked = { task ->
                 task.isDone = !task.isDone
@@ -62,9 +65,6 @@ class ExploreUserCategoryAdapter(
 
         // "+" 텍스트 눌러서 할 일 추가
         holder.tvAddTask.visibility=View.INVISIBLE
-        holder.tvAddTask.setOnClickListener {
-            onAddTaskClick(category)
-        }
     }
 
     override fun getItemCount(): Int = categories.size
@@ -76,6 +76,11 @@ class ExploreUserCategoryAdapter(
 
     fun updateSelectedDate(date: LocalDate) {
         this.selectedDate = date
+        notifyDataSetChanged()
+    }
+
+    fun setTestObjects(tempCategories: List<CategoryDto>){
+        this.categories = tempCategories
         notifyDataSetChanged()
     }
 }

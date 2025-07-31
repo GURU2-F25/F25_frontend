@@ -14,6 +14,7 @@ import com.example.f25_frontend.model.TaskDto
     일정 데이터 바인딩 어댑터
 */
 class TaskAdapter(
+    private val visible: Int = View.VISIBLE,
     private val taskDtos: List<TaskDto>,
     private val onTaskChecked: (TaskDto) -> Unit,
     private val onTaskDeleted: (TaskDto) -> Unit
@@ -33,6 +34,9 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskDtos[position]
 
+        if(visible==View.INVISIBLE) holder.cbTask.isEnabled = false
+        holder.btnDelete.visibility = visible
+
         holder.tvTitle.text = task.title
 
         // ✅ 중요: 이전 리스너 제거 (RecyclerView 재활용 방지)
@@ -51,6 +55,5 @@ class TaskAdapter(
             onTaskDeleted(task)
         }
     }
-
     override fun getItemCount(): Int = taskDtos.size
 }

@@ -12,6 +12,7 @@ class DataStoreUtil(context: Context) {
 
 //    getter setter override, 편의성을 위해 defaultValue empty 메소드 추가 구현
     fun getString(key: String): String {
+
         return prefs.getString(key, "").toString()
     }
     fun getString(key: String, defaultValue: String): String {

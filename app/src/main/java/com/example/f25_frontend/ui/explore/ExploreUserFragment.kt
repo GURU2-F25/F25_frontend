@@ -37,6 +37,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.DayOfWeek
 import java.time.LocalDate
+import kotlin.random.Random
 
 /*
     @Author 조수연
@@ -64,6 +65,7 @@ class ExploreUserFragment : Fragment() {
     private val binding get() = _binding!!
     private val exploreUserViewModel: ExploreUserViewModel by activityViewModels()
 
+    private var globalCategories: List<CategoryDto> = listOf()
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -178,6 +180,9 @@ class ExploreUserFragment : Fragment() {
         exploreUserViewModel.updateUser(user)
         initUserInfoLayout(user)
 
+        testAssetsInit()
+
+       /*
         val service: RetrofitUtil = ApiClient.getAuthApiClient().create(RetrofitUtil::class.java)
         service.getCategory(user.id)
             .enqueue(object : Callback<List<CategoryDto>> {
@@ -187,16 +192,16 @@ class ExploreUserFragment : Fragment() {
                 ) {
                     if (response.body() != null) {
                         val respCategoryList: List<CategoryDto> = response.body()!!
-                        /*@FIXME FROM조수연 TO김소연
-                                백엔드 반환값 내 tasksByDate가 비직렬화 과정 중 null 발생하여 초기화 작업 필요. iterator를 통해 임시 조치하였음.*/
+                        *//*@FIXME FROM조수연 TO김소연
+                                백엔드 반환값 내 tasksByDate가 비직렬화 과정 중 null 발생하여 초기화 작업 필요. iterator를 통해 임시 조치하였음.*//*
                         val iteratorCategoryList = respCategoryList.iterator()
                         while (iteratorCategoryList.hasNext()) {
                             val iterCateNext = iteratorCategoryList.next()
                             iterCateNext.tasksByDate = mutableMapOf()
                         }
-                        /*@FIXME FROM조수연 TO김소연
+                        *//*@FIXME FROM조수연 TO김소연
                             updateCategories 함수 내에서 불러온 카테고리 name값이 변경되지않음. (ExploreUserCategoryAdapter.kt 확인)
-                             또한 백엔드측에서 반환 한 color값이 정상 작동하는 지 확인 후 수정 필요.*/
+                             또한 백엔드측에서 반환 한 color값이 정상 작동하는 지 확인 후 수정 필요.*//*
                         categoryAdapter.updateCategories(respCategoryList)
 //                      updateCategoryProgress(respCategoryList)
 
@@ -211,11 +216,11 @@ class ExploreUserFragment : Fragment() {
                                         val iteratorTaskList = respTaskList.iterator()
                                         while (iteratorTaskList.hasNext()) {
                                             var iterTaskNext = iteratorTaskList.next()
-                                            /*@FIXME FROM조수연 TO김소연
+                                            *//*@FIXME FROM조수연 TO김소연
                                                 respTaskList: List<TaskDto>에서 카테고리별로 dataList를 분리한 후
                                                 respTaskList: List<CategoryDto> 내부 CategoryDto들과 매칭되는 dataList를 tasksByDate에 SET해주세요.
                                                 TODOFragment쪽도 동일하게 적용되어 해당 부분 해결 되어야 완성이 가능합니다.
-                                             */
+                                             *//*
                                         }
                                     }
                                 }
@@ -231,7 +236,7 @@ class ExploreUserFragment : Fragment() {
                 override fun onFailure(call: Call<List<CategoryDto>>, t: Throwable) {
 //                    TODO("Not yet implemented")
                 }
-            })
+            })*/
 
         categoryViewModel.selectedDate.observe(viewLifecycleOwner) { date ->
             selectedDate = date
@@ -243,8 +248,11 @@ class ExploreUserFragment : Fragment() {
         }
 
         categoryViewModel.categoriesForSelectedDate.observe(viewLifecycleOwner) { categories ->
-            categoryAdapter.updateCategories(categories)
-            updateCategoryProgress(categories)
+            testAssetsInit()
+            categoryAdapter.updateCategories(globalCategories)
+            updateCategoryProgress(globalCategories)
+//            categoryAdapter.updateCategories(categories)
+//            updateCategoryProgress(categories)
         }
 
         btnPrevWeek.setOnClickListener { shiftWeek(-1) }
@@ -269,7 +277,7 @@ class ExploreUserFragment : Fragment() {
 
     private fun setupCategoryList() {
         categoryAdapter = ExploreUserCategoryAdapter(
-            categories = emptyList(),
+            categories = globalCategories,
             selectedDate = selectedDate,
             onAddTaskClick = { },
             onTaskChecked = { },
@@ -334,6 +342,214 @@ class ExploreUserFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    fun testAssetsInit(){
+        val colorArr :List<Int> = mutableListOf<Int>(Color.parseColor("#FCDC58"), Color.parseColor("#DCDC85"), Color.parseColor("#9B9BFF"), Color.parseColor("#A7D397"), Color.parseColor("#FF9B9B"))
 
+        val c1 = CategoryDto(id = "1a", userId = "allenjeffrey4971", name = "과제(전공)", color = colorArr[0], tasksByDate = mutableMapOf())
+        val c2 = CategoryDto(id = "2a", userId = "allenjeffrey4971", name = "과제(교양)", color = colorArr[1], tasksByDate = mutableMapOf())
+        val c3 = CategoryDto(id = "3a", userId = "allenjeffrey4971", name = "자기계발", color = colorArr[2], tasksByDate = mutableMapOf())
+        val c4 = CategoryDto(id = "4a", userId = "allenjeffrey4971", name = "운동", color = colorArr[3], tasksByDate = mutableMapOf())
+        val c5 = CategoryDto(id = "5a", userId = "allenjeffrey4971", name = "취미", color = colorArr[4], tasksByDate = mutableMapOf())
+
+        val t1 = TaskDto(title= "팀플 A", date= LocalDate.parse("2025-07-31"), categoryDto = c1, isDone=true)
+        val t2 = TaskDto(title= "팀플 B", date= LocalDate.parse("2025-07-31"), categoryDto = c1, isDone=true)
+        val t3 = TaskDto(title= "팀플 C", date= LocalDate.parse("2025-07-31"), categoryDto = c1)
+        val t4 = TaskDto(title= "협업 A", date= LocalDate.parse("2025-07-31"), categoryDto = c2)
+        val t5 = TaskDto(title= "협업 B", date= LocalDate.parse("2025-07-31"), categoryDto = c2, isDone=true)
+        val t6 = TaskDto(title= "협업 C", date= LocalDate.parse("2025-07-31"), categoryDto = c2)
+        val t7 = TaskDto(title= "솔플 A", date= LocalDate.parse("2025-07-31"), categoryDto = c3, isDone=true)
+        val t8 = TaskDto(title= "솔플 A", date= LocalDate.parse("2025-07-31"), categoryDto = c3, isDone=true)
+        val t9 = TaskDto(title= "솔플 A", date= LocalDate.parse("2025-07-31"), categoryDto = c3, isDone=true)
+        val t10 = TaskDto(title= "갠플 A", date= LocalDate.parse("2025-07-31"), categoryDto = c4)
+        val t11 = TaskDto(title= "갠플 B", date= LocalDate.parse("2025-07-31"), categoryDto = c4)
+        val t12 = TaskDto(title= "갠플 C", date= LocalDate.parse("2025-07-31"), categoryDto = c4)
+        val t13 = TaskDto(title= "필수 수행 A", date= LocalDate.parse("2025-07-31"), categoryDto = c5)
+        val t14 = TaskDto(title= "필수 수행 B", date= LocalDate.parse("2025-07-31"), categoryDto = c5, isDone=true)
+        val t15 = TaskDto(title= "필수 수행 C", date= LocalDate.parse("2025-07-31"), categoryDto = c5)
+
+        val allTaskList:MutableList<TaskDto> = mutableListOf(t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11,t12,t13,t14,t15)
+
+
+        var mL1:MutableList<TaskDto> = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        var mL2:MutableList<TaskDto> = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        var mL3:MutableList<TaskDto> = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        var mL4:MutableList<TaskDto> = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        var mL5:MutableList<TaskDto> = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-07-31"),mL1)
+        c2.tasksByDate.put(LocalDate.parse("2025-07-31"),mL2)
+        c3.tasksByDate.put(LocalDate.parse("2025-07-31"),mL3)
+        c4.tasksByDate.put(LocalDate.parse("2025-07-31"),mL4)
+        c5.tasksByDate.put(LocalDate.parse("2025-07-31"),mL5)
+
+        mL1 = mutableListOf()
+        mL2 = mutableListOf()
+        mL3 = mutableListOf()
+        mL4 = mutableListOf()
+        mL5 = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-07-30"),mL1)
+        c2.tasksByDate.put(LocalDate.parse("2025-07-30"),mL2)
+        c3.tasksByDate.put(LocalDate.parse("2025-07-30"),mL3)
+        c4.tasksByDate.put(LocalDate.parse("2025-07-30"),mL4)
+        c5.tasksByDate.put(LocalDate.parse("2025-07-30"),mL5)
+
+        mL1 = mutableListOf()
+        mL2 = mutableListOf()
+        mL3 = mutableListOf()
+        mL4 = mutableListOf()
+        mL5 = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-07-29"),mL1)
+        c2.tasksByDate.put(LocalDate.parse("2025-07-29"),mL2)
+        c3.tasksByDate.put(LocalDate.parse("2025-07-29"),mL3)
+        c4.tasksByDate.put(LocalDate.parse("2025-07-29"),mL4)
+        c5.tasksByDate.put(LocalDate.parse("2025-07-29"),mL5)
+        mL1 = mutableListOf()
+        mL2 = mutableListOf()
+        mL3 = mutableListOf()
+        mL4 = mutableListOf()
+        mL5 = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-07-28"),mL1)
+        c2.tasksByDate.put(LocalDate.parse("2025-07-28"),mL2)
+        c3.tasksByDate.put(LocalDate.parse("2025-07-28"),mL3)
+        c4.tasksByDate.put(LocalDate.parse("2025-07-28"),mL4)
+        c5.tasksByDate.put(LocalDate.parse("2025-07-28"),mL5)
+        mL1 = mutableListOf()
+        mL2 = mutableListOf()
+        mL3 = mutableListOf()
+        mL4 = mutableListOf()
+        mL5 = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-08-01"),mL1)
+        c2.tasksByDate.put(LocalDate.parse("2025-08-01"),mL2)
+        c3.tasksByDate.put(LocalDate.parse("2025-08-01"),mL3)
+        c4.tasksByDate.put(LocalDate.parse("2025-08-01"),mL4)
+        c5.tasksByDate.put(LocalDate.parse("2025-08-01"),mL5)
+        mL1 = mutableListOf()
+        mL2 = mutableListOf()
+        mL3 = mutableListOf()
+        mL4 = mutableListOf()
+        mL5 = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-08-02"),mL5)
+        c2.tasksByDate.put(LocalDate.parse("2025-08-02"),mL4)
+        c3.tasksByDate.put(LocalDate.parse("2025-08-02"),mL3)
+        c4.tasksByDate.put(LocalDate.parse("2025-08-02"),mL2)
+        c5.tasksByDate.put(LocalDate.parse("2025-08-02"),mL1)
+        mL1 = mutableListOf()
+        mL2 = mutableListOf()
+        mL3 = mutableListOf()
+        mL4 = mutableListOf()
+        mL5 = mutableListOf()
+        for(index in 0..Random.nextInt(5)){
+            mL1.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL2.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL3.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL4.add(allTaskList[Random.nextInt(15)])
+        }
+        for(index in 0..Random.nextInt(5)){
+            mL5.add(allTaskList[Random.nextInt(15)])
+        }
+        c1.tasksByDate.put(LocalDate.parse("2025-08-03"),mL3)
+        c2.tasksByDate.put(LocalDate.parse("2025-08-03"),mL1)
+        c3.tasksByDate.put(LocalDate.parse("2025-08-03"),mL5)
+        c4.tasksByDate.put(LocalDate.parse("2025-08-03"),mL2)
+        c5.tasksByDate.put(LocalDate.parse("2025-08-03"),mL4)
+
+        globalCategories = listOf(c1,c2,c3,c4,c5)
+        categoryAdapter.setTestObjects(globalCategories)
+    }
 
 }
