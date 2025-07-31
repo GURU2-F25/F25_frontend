@@ -17,6 +17,7 @@ import com.example.f25_frontend.model.CategoryDto
 import com.example.f25_frontend.adapter.CategorySettingAdapter
 import com.example.f25_frontend.utils.ApiClient
 import com.example.f25_frontend.utils.RetrofitUtil
+import com.example.f25_frontend.viewmodel.CategoryViewModel
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,7 +42,6 @@ class CategorySettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         return inflater.inflate(R.layout.fragment_category_setting, container, false)
     }
 
@@ -49,7 +49,7 @@ class CategorySettingFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerCategory)
         btnAddCategory = view.findViewById(R.id.btnAddCategory)
 
-        // activity의 상단바에 있는 뒤로가기 버튼을 제어
+        // activity가 상단바에 있는 뒤로가기 버튼을 제어
         requireActivity().findViewById<ImageButton>(R.id.btnPopBackStack)?.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -88,7 +88,7 @@ class CategorySettingFragment : Fragment() {
             R.id.colorOption8 to Color.parseColor("#6782eb"),
             R.id.colorOption9 to Color.parseColor("#3b3b3b")
         )
-        Log.d("colorOption",colorMap.toString())
+        Log.d("colorOption", colorMap.toString())
 
         val allFrames = colorMap.keys.map { view.findViewById<FrameLayout>(it) }
 
@@ -123,7 +123,7 @@ class CategorySettingFragment : Fragment() {
         btnSave.setOnClickListener {
             val name = etCategoryName.text.toString().trim()
             if (name.isNotEmpty()) {
-                val categoryDto = CategoryDto(name = name, color = selectedColor[0], id= System.currentTimeMillis().toString(), userId = "devId")
+                val categoryDto = CategoryDto(name = name, color = selectedColor[0], id = System.currentTimeMillis().toString(), userId = "devId")
                 viewModel.addCategory(selectedDate, categoryDto)
                 val service: RetrofitUtil = ApiClient.getNoAuthApiClient().create(RetrofitUtil::class.java)
                 service.addCategory(categoryDto)
@@ -132,13 +132,10 @@ class CategorySettingFragment : Fragment() {
                             call: Call<JsonElement>,
                             response: Response<JsonElement>
                         ) {
-                            Log.d("result category add::",response.body().toString())
+                            Log.d("result category add::", response.body().toString())
                         }
 
-                        override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-
-                        }
-
+                        override fun onFailure(call: Call<JsonElement>, t: Throwable) {}
                     })
                 dialog.dismiss()
             } else {
@@ -166,7 +163,6 @@ class CategorySettingFragment : Fragment() {
             if (newName.isNotEmpty()) {
                 val updated = categoryDto.copy(name = newName, color = selectedColor[0])
                 viewModel.updateCategory(selectedDate, categoryDto, updated)
-
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "카테고리 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
